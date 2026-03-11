@@ -5,3 +5,5 @@ requests
 psycopg2-binary
 sqlalchemy
 python-dotenv
+fhir.resources
+fhirclient

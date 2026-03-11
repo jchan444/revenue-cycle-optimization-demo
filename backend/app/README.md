@@ -8,9 +8,7 @@ The steps below will help you run the backend server locally.
 
 # 1. Clone the Repository
 
-Clone the project from GitHub:
-
-git clone <REPO_URL>
+Clone the project from GitHub
 
 Then navigate to the backend folder:
 
@@ -68,7 +66,7 @@ Open a browser and visit:
 
 http://127.0.0.1:8000
 
-FastAPI also automatically generates API documentation:
+FastAPI should also automatically generates API documentation:
 
 http://127.0.0.1:8000/docs
 
