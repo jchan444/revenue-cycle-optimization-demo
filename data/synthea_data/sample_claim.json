@@ -1,0 +1,6 @@
+{
+  "id": "claim-001",
+  "patient_id": "patient-123",
+  "procedure_code": "99213",
+  "insurance_id": "aetna-001"
+}
