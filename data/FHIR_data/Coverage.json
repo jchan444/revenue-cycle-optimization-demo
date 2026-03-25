@@ -1,0 +1,5402 @@
+[
+  {
+    "resourceType": "Coverage",
+    "id": "cov-58c297c4",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/58c297c4-d684-4677-8024-01131d93835e"
+    },
+    "subscriberId": "NONE-00001",
+    "beneficiary": {
+      "reference": "Patient/58c297c4-d684-4677-8024-01131d93835e"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-01T17:03:38-05:00",
+      "end": "2021-02-01T17:03:38-05:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-588675dc",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/588675dc-e80e-4528-a78f-af10f9755f23"
+    },
+    "subscriberId": "BCBS-00002",
+    "beneficiary": {
+      "reference": "Patient/588675dc-e80e-4528-a78f-af10f9755f23"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-09-08T16:18:04-04:00",
+      "end": "2020-09-08T16:18:04-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-118616a4",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "EPO",
+          "display": "Anthem"
+        }
+      ],
+      "text": "Anthem"
+    },
+    "subscriber": {
+      "reference": "Patient/118616a4-f0b2-411f-8050-39d5d27c738c"
+    },
+    "subscriberId": "ANT-00003",
+    "beneficiary": {
+      "reference": "Patient/118616a4-f0b2-411f-8050-39d5d27c738c"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-08-01T13:21:46-04:00",
+      "end": "2020-08-01T13:21:46-04:00"
+    },
+    "payor": [
+      {
+        "display": "Anthem"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "EPO",
+        "name": "Anthem"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-c852042b",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/c852042b-1373-45e6-acb5-f252c733de3a"
+    },
+    "subscriberId": "NONE-00004",
+    "beneficiary": {
+      "reference": "Patient/c852042b-1373-45e6-acb5-f252c733de3a"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-12-05T01:47:19-05:00",
+      "end": "2020-12-05T01:47:19-05:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-21fba439",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/21fba439-ca79-411f-a081-37a432a78f3a"
+    },
+    "subscriberId": "BCBS-00005",
+    "beneficiary": {
+      "reference": "Patient/21fba439-ca79-411f-a081-37a432a78f3a"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-17T17:56:44-05:00",
+      "end": "2021-02-17T17:56:44-05:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-1c911236",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/1c911236-e7da-42a6-a3bd-3a3b4e55d5cd"
+    },
+    "subscriberId": "NONE-00006",
+    "beneficiary": {
+      "reference": "Patient/1c911236-e7da-42a6-a3bd-3a3b4e55d5cd"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-09-04T18:00:30-04:00",
+      "end": "2020-09-04T18:00:30-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-0b8a6ef0",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Humana"
+        }
+      ],
+      "text": "Humana"
+    },
+    "subscriber": {
+      "reference": "Patient/0b8a6ef0-07c8-48ca-804d-1e64f6e44b95"
+    },
+    "subscriberId": "HUM-00007",
+    "beneficiary": {
+      "reference": "Patient/0b8a6ef0-07c8-48ca-804d-1e64f6e44b95"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-06-25T21:51:15-04:00",
+      "end": "2020-06-25T21:51:15-04:00"
+    },
+    "payor": [
+      {
+        "display": "Humana"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Humana"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-644d85af",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "UnitedHealthcare"
+        }
+      ],
+      "text": "UnitedHealthcare"
+    },
+    "subscriber": {
+      "reference": "Patient/644d85af-aaf9-4068-ad23-1e55aedd5205"
+    },
+    "subscriberId": "UHC-00008",
+    "beneficiary": {
+      "reference": "Patient/644d85af-aaf9-4068-ad23-1e55aedd5205"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-20T21:56:54-04:00",
+      "end": "2021-03-20T21:56:54-04:00"
+    },
+    "payor": [
+      {
+        "display": "UnitedHealthcare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "UnitedHealthcare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-32e46528",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/32e46528-35d1-4ed7-9aaa-09ae00f9681c"
+    },
+    "subscriberId": "AET-00009",
+    "beneficiary": {
+      "reference": "Patient/32e46528-35d1-4ed7-9aaa-09ae00f9681c"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-08T09:21:58-04:00",
+      "end": "2021-04-08T09:21:58-04:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-b5d74e2f",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/b5d74e2f-ebfa-4759-a9e2-dea39d79d84f"
+    },
+    "subscriberId": "NONE-00010",
+    "beneficiary": {
+      "reference": "Patient/b5d74e2f-ebfa-4759-a9e2-dea39d79d84f"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-05-06T02:15:40-04:00",
+      "end": "2021-05-06T02:15:40-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-f1b34cf2",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/f1b34cf2-dae4-4918-b4ab-5a732cd7ea18"
+    },
+    "subscriberId": "MCR-00011",
+    "beneficiary": {
+      "reference": "Patient/f1b34cf2-dae4-4918-b4ab-5a732cd7ea18"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-11T18:17:58-04:00",
+      "end": "2021-03-11T18:17:58-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-6c5d9ca9",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "FFS",
+          "display": "Medicaid"
+        }
+      ],
+      "text": "Medicaid"
+    },
+    "subscriber": {
+      "reference": "Patient/6c5d9ca9-54d7-42f5-bfae-a7c19cd217f2"
+    },
+    "subscriberId": "MCD-00012",
+    "beneficiary": {
+      "reference": "Patient/6c5d9ca9-54d7-42f5-bfae-a7c19cd217f2"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-12T17:00:49-05:00",
+      "end": "2021-02-12T17:00:49-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicaid"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "FFS",
+        "name": "Medicaid"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-c6c60742",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/c6c60742-8694-46e4-bb42-b00bf6d8b536"
+    },
+    "subscriberId": "AET-00013",
+    "beneficiary": {
+      "reference": "Patient/c6c60742-8694-46e4-bb42-b00bf6d8b536"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-11-20T05:39:55-05:00",
+      "end": "2020-11-20T05:39:55-05:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-e3a227a0",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/e3a227a0-c9cd-48ac-89d3-522bca860699"
+    },
+    "subscriberId": "NONE-00014",
+    "beneficiary": {
+      "reference": "Patient/e3a227a0-c9cd-48ac-89d3-522bca860699"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-29T13:53:33-04:00",
+      "end": "2021-04-29T13:53:33-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-e6dde18e",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/e6dde18e-af01-4f2f-b74a-1ec7d0368f93"
+    },
+    "subscriberId": "AET-00015",
+    "beneficiary": {
+      "reference": "Patient/e6dde18e-af01-4f2f-b74a-1ec7d0368f93"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-10-28T15:53:27-04:00",
+      "end": "2020-10-28T15:53:27-04:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-b4405d0c",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/b4405d0c-89e6-4788-b34a-f013480249c3"
+    },
+    "subscriberId": "NONE-00016",
+    "beneficiary": {
+      "reference": "Patient/b4405d0c-89e6-4788-b34a-f013480249c3"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-26T04:37:36-04:00",
+      "end": "2021-04-26T04:37:36-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-fabfe789",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Humana"
+        }
+      ],
+      "text": "Humana"
+    },
+    "subscriber": {
+      "reference": "Patient/fabfe789-b8b6-45ae-ad04-f43bb2d5c342"
+    },
+    "subscriberId": "HUM-00017",
+    "beneficiary": {
+      "reference": "Patient/fabfe789-b8b6-45ae-ad04-f43bb2d5c342"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-17T04:58:17-05:00",
+      "end": "2021-02-17T04:58:17-05:00"
+    },
+    "payor": [
+      {
+        "display": "Humana"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Humana"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-33c10b76",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/33c10b76-3b44-4e7f-a9df-5d4d274180a9"
+    },
+    "subscriberId": "NONE-00018",
+    "beneficiary": {
+      "reference": "Patient/33c10b76-3b44-4e7f-a9df-5d4d274180a9"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-28T16:30:24-04:00",
+      "end": "2021-04-28T16:30:24-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-6e4c37f3",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/6e4c37f3-964b-4e10-ab13-c208efc30e71"
+    },
+    "subscriberId": "MCR-00019",
+    "beneficiary": {
+      "reference": "Patient/6e4c37f3-964b-4e10-ab13-c208efc30e71"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-24T13:01:18-04:00",
+      "end": "2021-04-24T13:01:18-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-6b12b22d",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/6b12b22d-6dc2-486c-9526-8ac8524f6402"
+    },
+    "subscriberId": "BCBS-00020",
+    "beneficiary": {
+      "reference": "Patient/6b12b22d-6dc2-486c-9526-8ac8524f6402"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-10-01T06:43:34-04:00",
+      "end": "2020-10-01T06:43:34-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-ff9d23d8",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/ff9d23d8-f3c8-4eee-a5f9-e05e843675b5"
+    },
+    "subscriberId": "NONE-00021",
+    "beneficiary": {
+      "reference": "Patient/ff9d23d8-f3c8-4eee-a5f9-e05e843675b5"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-24T06:06:06-04:00",
+      "end": "2021-03-24T06:06:06-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-9e84a65b",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/9e84a65b-6e18-4c9f-9dfc-3c44c213cfe3"
+    },
+    "subscriberId": "NONE-00022",
+    "beneficiary": {
+      "reference": "Patient/9e84a65b-6e18-4c9f-9dfc-3c44c213cfe3"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-16T03:32:39-04:00",
+      "end": "2021-04-16T03:32:39-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-a0c6fb94",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/a0c6fb94-31c5-4bac-ba67-26d7f9385fbb"
+    },
+    "subscriberId": "AET-00023",
+    "beneficiary": {
+      "reference": "Patient/a0c6fb94-31c5-4bac-ba67-26d7f9385fbb"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2018-10-05T03:04:16-04:00",
+      "end": "2019-10-05T03:04:16-04:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-4def357e",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/4def357e-f8fa-436c-b5e5-4cc5d6266d50"
+    },
+    "subscriberId": "NONE-00024",
+    "beneficiary": {
+      "reference": "Patient/4def357e-f8fa-436c-b5e5-4cc5d6266d50"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-15T19:23:57-04:00",
+      "end": "2021-03-15T19:23:57-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-0e4c9b04",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/0e4c9b04-9248-4eeb-b4d0-30467390cc74"
+    },
+    "subscriberId": "MCR-00025",
+    "beneficiary": {
+      "reference": "Patient/0e4c9b04-9248-4eeb-b4d0-30467390cc74"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-19T12:20:15-04:00",
+      "end": "2021-04-19T12:20:15-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-ce444833",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/ce444833-04ed-494c-a6cb-5a6ed5ac446f"
+    },
+    "subscriberId": "BCBS-00026",
+    "beneficiary": {
+      "reference": "Patient/ce444833-04ed-494c-a6cb-5a6ed5ac446f"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-27T19:14:10-04:00",
+      "end": "2021-03-27T19:14:10-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-78f27a34",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/78f27a34-6c0f-42d7-bbc8-4d545b4b8b20"
+    },
+    "subscriberId": "MCR-00027",
+    "beneficiary": {
+      "reference": "Patient/78f27a34-6c0f-42d7-bbc8-4d545b4b8b20"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-11-09T11:06:24-05:00",
+      "end": "2020-11-09T11:06:24-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-70ac5078",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "FFS",
+          "display": "Medicaid"
+        }
+      ],
+      "text": "Medicaid"
+    },
+    "subscriber": {
+      "reference": "Patient/70ac5078-22ef-471d-bed7-cb694775b4ba"
+    },
+    "subscriberId": "MCD-00028",
+    "beneficiary": {
+      "reference": "Patient/70ac5078-22ef-471d-bed7-cb694775b4ba"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-10-19T02:48:55-04:00",
+      "end": "2020-10-19T02:48:55-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicaid"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "FFS",
+        "name": "Medicaid"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-eac6bc79",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/eac6bc79-1d00-497f-b585-ea1e68e7e97c"
+    },
+    "subscriberId": "MCR-00029",
+    "beneficiary": {
+      "reference": "Patient/eac6bc79-1d00-497f-b585-ea1e68e7e97c"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-12-19T23:02:49-05:00",
+      "end": "2020-12-19T23:02:49-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-e26c4cc1",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/e26c4cc1-8769-4a0a-9dbe-51f428e81da2"
+    },
+    "subscriberId": "NONE-00030",
+    "beneficiary": {
+      "reference": "Patient/e26c4cc1-8769-4a0a-9dbe-51f428e81da2"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-23T07:46:58-04:00",
+      "end": "2021-04-23T07:46:58-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-2193ce2f",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/2193ce2f-1ea0-40b2-9b3a-1a59c9f69553"
+    },
+    "subscriberId": "MCR-00031",
+    "beneficiary": {
+      "reference": "Patient/2193ce2f-1ea0-40b2-9b3a-1a59c9f69553"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-12-15T09:12:00-05:00",
+      "end": "2020-12-15T09:12:00-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-e9f1d6e2",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "FFS",
+          "display": "Medicaid"
+        }
+      ],
+      "text": "Medicaid"
+    },
+    "subscriber": {
+      "reference": "Patient/e9f1d6e2-7218-445b-84cf-51b9c1f72123"
+    },
+    "subscriberId": "MCD-00032",
+    "beneficiary": {
+      "reference": "Patient/e9f1d6e2-7218-445b-84cf-51b9c1f72123"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-25T23:59:12-04:00",
+      "end": "2021-03-25T23:59:12-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicaid"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "FFS",
+        "name": "Medicaid"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-cde6eb49",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/cde6eb49-a760-4f65-bdf7-007ba3b87076"
+    },
+    "subscriberId": "BCBS-00033",
+    "beneficiary": {
+      "reference": "Patient/cde6eb49-a760-4f65-bdf7-007ba3b87076"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-12-14T01:43:40-05:00",
+      "end": "2020-12-14T01:43:40-05:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-b1e834a6",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "UnitedHealthcare"
+        }
+      ],
+      "text": "UnitedHealthcare"
+    },
+    "subscriber": {
+      "reference": "Patient/b1e834a6-e110-4402-ac76-f78433ed09fa"
+    },
+    "subscriberId": "UHC-00034",
+    "beneficiary": {
+      "reference": "Patient/b1e834a6-e110-4402-ac76-f78433ed09fa"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-05-26T14:14:40-04:00",
+      "end": "2020-05-26T14:14:40-04:00"
+    },
+    "payor": [
+      {
+        "display": "UnitedHealthcare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "UnitedHealthcare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-8d3e1155",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Cigna Health"
+        }
+      ],
+      "text": "Cigna Health"
+    },
+    "subscriber": {
+      "reference": "Patient/8d3e1155-278a-4824-a7e0-fddb24c7c179"
+    },
+    "subscriberId": "CGN-00035",
+    "beneficiary": {
+      "reference": "Patient/8d3e1155-278a-4824-a7e0-fddb24c7c179"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-16T07:26:41-05:00",
+      "end": "2021-02-16T07:26:41-05:00"
+    },
+    "payor": [
+      {
+        "display": "Cigna Health"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Cigna Health"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-c536dee9",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "EPO",
+          "display": "Anthem"
+        }
+      ],
+      "text": "Anthem"
+    },
+    "subscriber": {
+      "reference": "Patient/c536dee9-9ef6-4807-ae20-9f1045c9c7d6"
+    },
+    "subscriberId": "ANT-00036",
+    "beneficiary": {
+      "reference": "Patient/c536dee9-9ef6-4807-ae20-9f1045c9c7d6"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-01-27T02:31:46-05:00",
+      "end": "2020-01-27T02:31:46-05:00"
+    },
+    "payor": [
+      {
+        "display": "Anthem"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "EPO",
+        "name": "Anthem"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-b156a323",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Cigna Health"
+        }
+      ],
+      "text": "Cigna Health"
+    },
+    "subscriber": {
+      "reference": "Patient/b156a323-bbab-463f-b1a4-fba103269d16"
+    },
+    "subscriberId": "CGN-00037",
+    "beneficiary": {
+      "reference": "Patient/b156a323-bbab-463f-b1a4-fba103269d16"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-19T15:30:52-05:00",
+      "end": "2021-02-19T15:30:52-05:00"
+    },
+    "payor": [
+      {
+        "display": "Cigna Health"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Cigna Health"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-55940999",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/55940999-fd98-4922-b9bc-a6bf0c1855ed"
+    },
+    "subscriberId": "MCR-00038",
+    "beneficiary": {
+      "reference": "Patient/55940999-fd98-4922-b9bc-a6bf0c1855ed"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-11-23T05:59:02-05:00",
+      "end": "2020-11-23T05:59:02-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-a845ead4",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "FFS",
+          "display": "Medicaid"
+        }
+      ],
+      "text": "Medicaid"
+    },
+    "subscriber": {
+      "reference": "Patient/a845ead4-d9de-42eb-b4b5-eb21a8963578"
+    },
+    "subscriberId": "MCD-00039",
+    "beneficiary": {
+      "reference": "Patient/a845ead4-d9de-42eb-b4b5-eb21a8963578"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-12-21T16:13:42-05:00",
+      "end": "2020-12-21T16:13:42-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicaid"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "FFS",
+        "name": "Medicaid"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-ceee7d55",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "EPO",
+          "display": "Anthem"
+        }
+      ],
+      "text": "Anthem"
+    },
+    "subscriber": {
+      "reference": "Patient/ceee7d55-7996-4ae2-b843-e3ebadadd5ed"
+    },
+    "subscriberId": "ANT-00040",
+    "beneficiary": {
+      "reference": "Patient/ceee7d55-7996-4ae2-b843-e3ebadadd5ed"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-22T03:41:54-04:00",
+      "end": "2021-04-22T03:41:54-04:00"
+    },
+    "payor": [
+      {
+        "display": "Anthem"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "EPO",
+        "name": "Anthem"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-dab86f8b",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "UnitedHealthcare"
+        }
+      ],
+      "text": "UnitedHealthcare"
+    },
+    "subscriber": {
+      "reference": "Patient/dab86f8b-ba70-40de-883b-22ef460f8458"
+    },
+    "subscriberId": "UHC-00041",
+    "beneficiary": {
+      "reference": "Patient/dab86f8b-ba70-40de-883b-22ef460f8458"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-18T04:11:16-05:00",
+      "end": "2021-02-18T04:11:16-05:00"
+    },
+    "payor": [
+      {
+        "display": "UnitedHealthcare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "UnitedHealthcare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-33f95545",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "EPO",
+          "display": "Anthem"
+        }
+      ],
+      "text": "Anthem"
+    },
+    "subscriber": {
+      "reference": "Patient/33f95545-e4cd-4535-a9ce-f91438f6f5ec"
+    },
+    "subscriberId": "ANT-00042",
+    "beneficiary": {
+      "reference": "Patient/33f95545-e4cd-4535-a9ce-f91438f6f5ec"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-09-05T11:59:59-04:00",
+      "end": "2020-09-05T11:59:59-04:00"
+    },
+    "payor": [
+      {
+        "display": "Anthem"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "EPO",
+        "name": "Anthem"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-7cacc2af",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/7cacc2af-8f5b-4ed5-b5d9-8679dfecc4ca"
+    },
+    "subscriberId": "AET-00043",
+    "beneficiary": {
+      "reference": "Patient/7cacc2af-8f5b-4ed5-b5d9-8679dfecc4ca"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-05-26T21:27:39-04:00",
+      "end": "2020-05-26T21:27:39-04:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-b20c7c80",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/b20c7c80-49ac-4926-8b03-e9c69b40e1f5"
+    },
+    "subscriberId": "MCR-00044",
+    "beneficiary": {
+      "reference": "Patient/b20c7c80-49ac-4926-8b03-e9c69b40e1f5"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-08-09T00:11:18-04:00",
+      "end": "2020-08-09T00:11:18-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-69071541",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/69071541-e760-4d0c-bf8a-961a061cb0d5"
+    },
+    "subscriberId": "MCR-00045",
+    "beneficiary": {
+      "reference": "Patient/69071541-e760-4d0c-bf8a-961a061cb0d5"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-06-01T05:57:18-04:00",
+      "end": "2020-06-01T05:57:18-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-429f802a",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "FFS",
+          "display": "Dual Eligible"
+        }
+      ],
+      "text": "Dual Eligible"
+    },
+    "subscriber": {
+      "reference": "Patient/429f802a-51cc-48c3-85d4-1a72bb718fc2"
+    },
+    "subscriberId": "DUAL-00046",
+    "beneficiary": {
+      "reference": "Patient/429f802a-51cc-48c3-85d4-1a72bb718fc2"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-10-10T03:27:57-04:00",
+      "end": "2020-10-10T03:27:57-04:00"
+    },
+    "payor": [
+      {
+        "display": "Dual Eligible"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "FFS",
+        "name": "Dual Eligible"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-ee6df9f5",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Cigna Health"
+        }
+      ],
+      "text": "Cigna Health"
+    },
+    "subscriber": {
+      "reference": "Patient/ee6df9f5-bb0b-44d5-9561-c7cb020d5ae7"
+    },
+    "subscriberId": "CGN-00047",
+    "beneficiary": {
+      "reference": "Patient/ee6df9f5-bb0b-44d5-9561-c7cb020d5ae7"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-07-17T08:52:41-04:00",
+      "end": "2020-07-17T08:52:41-04:00"
+    },
+    "payor": [
+      {
+        "display": "Cigna Health"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Cigna Health"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-eca04de4",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/eca04de4-760d-41bb-9735-36549acbf46c"
+    },
+    "subscriberId": "MCR-00048",
+    "beneficiary": {
+      "reference": "Patient/eca04de4-760d-41bb-9735-36549acbf46c"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-29T19:15:47-04:00",
+      "end": "2021-03-29T19:15:47-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-abda99df",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "UnitedHealthcare"
+        }
+      ],
+      "text": "UnitedHealthcare"
+    },
+    "subscriber": {
+      "reference": "Patient/abda99df-39a2-4d1e-9f45-011a8e95d2f7"
+    },
+    "subscriberId": "UHC-00049",
+    "beneficiary": {
+      "reference": "Patient/abda99df-39a2-4d1e-9f45-011a8e95d2f7"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-01-01T06:47:46-05:00",
+      "end": "2021-01-01T06:47:46-05:00"
+    },
+    "payor": [
+      {
+        "display": "UnitedHealthcare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "UnitedHealthcare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-274adb5d",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/274adb5d-0bbb-4893-ab3b-8b490fece9b8"
+    },
+    "subscriberId": "MCR-00050",
+    "beneficiary": {
+      "reference": "Patient/274adb5d-0bbb-4893-ab3b-8b490fece9b8"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-10-18T06:43:25-04:00",
+      "end": "2020-10-18T06:43:25-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-60bfe954",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/60bfe954-09ec-4aea-89cc-6a4041fe8864"
+    },
+    "subscriberId": "BCBS-00051",
+    "beneficiary": {
+      "reference": "Patient/60bfe954-09ec-4aea-89cc-6a4041fe8864"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-12-01T17:36:45-05:00",
+      "end": "2020-12-01T17:36:45-05:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-65e1e178",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/65e1e178-0b4c-4539-a688-08cbde765967"
+    },
+    "subscriberId": "AET-00052",
+    "beneficiary": {
+      "reference": "Patient/65e1e178-0b4c-4539-a688-08cbde765967"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-14T17:51:43-04:00",
+      "end": "2021-03-14T17:51:43-04:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-fbfec681",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/fbfec681-d357-4b28-b1d2-5db6434c7846"
+    },
+    "subscriberId": "MCR-00053",
+    "beneficiary": {
+      "reference": "Patient/fbfec681-d357-4b28-b1d2-5db6434c7846"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-06T04:07:44-04:00",
+      "end": "2021-04-06T04:07:44-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-7a05bc93",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/7a05bc93-cf1a-4929-9aca-6178ba9abcb7"
+    },
+    "subscriberId": "NONE-00054",
+    "beneficiary": {
+      "reference": "Patient/7a05bc93-cf1a-4929-9aca-6178ba9abcb7"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-06-07T19:18:08-04:00",
+      "end": "2020-06-07T19:18:08-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-97228ae0",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "FFS",
+          "display": "Dual Eligible"
+        }
+      ],
+      "text": "Dual Eligible"
+    },
+    "subscriber": {
+      "reference": "Patient/97228ae0-6f83-459c-aae8-8f6c75911f62"
+    },
+    "subscriberId": "DUAL-00055",
+    "beneficiary": {
+      "reference": "Patient/97228ae0-6f83-459c-aae8-8f6c75911f62"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-11T15:12:17-05:00",
+      "end": "2021-02-11T15:12:17-05:00"
+    },
+    "payor": [
+      {
+        "display": "Dual Eligible"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "FFS",
+        "name": "Dual Eligible"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-7515d14b",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/7515d14b-843b-4210-8b6b-a33ab253d560"
+    },
+    "subscriberId": "BCBS-00056",
+    "beneficiary": {
+      "reference": "Patient/7515d14b-843b-4210-8b6b-a33ab253d560"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2017-06-14T08:46:32-04:00",
+      "end": "2018-06-14T08:46:32-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-b4cd3c8e",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/b4cd3c8e-766c-4cb0-a1bf-f3b03d469785"
+    },
+    "subscriberId": "MCR-00057",
+    "beneficiary": {
+      "reference": "Patient/b4cd3c8e-766c-4cb0-a1bf-f3b03d469785"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-07-12T14:33:14-04:00",
+      "end": "2020-07-12T14:33:14-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-d2524ab6",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/d2524ab6-4db9-440d-b588-6dcfcab89270"
+    },
+    "subscriberId": "BCBS-00058",
+    "beneficiary": {
+      "reference": "Patient/d2524ab6-4db9-440d-b588-6dcfcab89270"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-12-22T17:07:04-05:00",
+      "end": "2020-12-22T17:07:04-05:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-62e03ae7",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/62e03ae7-079c-4eda-9b5a-29440d3a015a"
+    },
+    "subscriberId": "BCBS-00059",
+    "beneficiary": {
+      "reference": "Patient/62e03ae7-079c-4eda-9b5a-29440d3a015a"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-07-20T22:38:33-04:00",
+      "end": "2020-07-20T22:38:33-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-8c9fea57",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/8c9fea57-6ded-47b0-88c9-75518430b572"
+    },
+    "subscriberId": "AET-00060",
+    "beneficiary": {
+      "reference": "Patient/8c9fea57-6ded-47b0-88c9-75518430b572"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-09-11T09:46:51-04:00",
+      "end": "2020-09-11T09:46:51-04:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-4bc3ef6a",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/4bc3ef6a-65c5-470d-8911-f26194b2a0e3"
+    },
+    "subscriberId": "BCBS-00061",
+    "beneficiary": {
+      "reference": "Patient/4bc3ef6a-65c5-470d-8911-f26194b2a0e3"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-09-27T10:24:51-04:00",
+      "end": "2020-09-27T10:24:51-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-f98b23bf",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "FFS",
+          "display": "Medicaid"
+        }
+      ],
+      "text": "Medicaid"
+    },
+    "subscriber": {
+      "reference": "Patient/f98b23bf-4443-46d0-9eaf-563e767cf948"
+    },
+    "subscriberId": "MCD-00062",
+    "beneficiary": {
+      "reference": "Patient/f98b23bf-4443-46d0-9eaf-563e767cf948"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-17T13:20:53-04:00",
+      "end": "2021-03-17T13:20:53-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicaid"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "FFS",
+        "name": "Medicaid"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-7ba8d35f",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/7ba8d35f-3f70-48b9-b711-104374136ac7"
+    },
+    "subscriberId": "NONE-00063",
+    "beneficiary": {
+      "reference": "Patient/7ba8d35f-3f70-48b9-b711-104374136ac7"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-01-06T17:03:54-05:00",
+      "end": "2021-01-06T17:03:54-05:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-f73fbfe8",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/f73fbfe8-471f-424f-867d-8603f3e20949"
+    },
+    "subscriberId": "BCBS-00064",
+    "beneficiary": {
+      "reference": "Patient/f73fbfe8-471f-424f-867d-8603f3e20949"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-10-18T17:50:00-04:00",
+      "end": "2020-10-18T17:50:00-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-a61b8a23",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/a61b8a23-1183-427b-be31-7799f00f26b3"
+    },
+    "subscriberId": "NONE-00065",
+    "beneficiary": {
+      "reference": "Patient/a61b8a23-1183-427b-be31-7799f00f26b3"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-02T08:02:38-04:00",
+      "end": "2021-04-02T08:02:38-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-4b696341",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/4b696341-294b-450b-98ed-390d3c957bd3"
+    },
+    "subscriberId": "MCR-00066",
+    "beneficiary": {
+      "reference": "Patient/4b696341-294b-450b-98ed-390d3c957bd3"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-11-01T07:15:16-04:00",
+      "end": "2020-11-01T07:15:16-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-a22be028",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/a22be028-3c7f-4074-a89e-1f3401d26e1b"
+    },
+    "subscriberId": "NONE-00067",
+    "beneficiary": {
+      "reference": "Patient/a22be028-3c7f-4074-a89e-1f3401d26e1b"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-27T16:19:42-04:00",
+      "end": "2021-04-27T16:19:42-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-7862749d",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Humana"
+        }
+      ],
+      "text": "Humana"
+    },
+    "subscriber": {
+      "reference": "Patient/7862749d-d45c-4b38-9274-aac6282086a6"
+    },
+    "subscriberId": "HUM-00068",
+    "beneficiary": {
+      "reference": "Patient/7862749d-d45c-4b38-9274-aac6282086a6"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-28T04:08:29-04:00",
+      "end": "2021-04-28T04:08:29-04:00"
+    },
+    "payor": [
+      {
+        "display": "Humana"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Humana"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-3cbdd43e",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Cigna Health"
+        }
+      ],
+      "text": "Cigna Health"
+    },
+    "subscriber": {
+      "reference": "Patient/3cbdd43e-7cb5-48b0-a097-47fecc7b4098"
+    },
+    "subscriberId": "CGN-00069",
+    "beneficiary": {
+      "reference": "Patient/3cbdd43e-7cb5-48b0-a097-47fecc7b4098"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-07-02T11:57:52-04:00",
+      "end": "2020-07-02T11:57:52-04:00"
+    },
+    "payor": [
+      {
+        "display": "Cigna Health"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Cigna Health"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-fdedcde9",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Humana"
+        }
+      ],
+      "text": "Humana"
+    },
+    "subscriber": {
+      "reference": "Patient/fdedcde9-3aa5-411f-bbdc-85052ec4ef7f"
+    },
+    "subscriberId": "HUM-00070",
+    "beneficiary": {
+      "reference": "Patient/fdedcde9-3aa5-411f-bbdc-85052ec4ef7f"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-29T16:06:56-04:00",
+      "end": "2021-03-29T16:06:56-04:00"
+    },
+    "payor": [
+      {
+        "display": "Humana"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Humana"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-8666cd40",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "UnitedHealthcare"
+        }
+      ],
+      "text": "UnitedHealthcare"
+    },
+    "subscriber": {
+      "reference": "Patient/8666cd40-7af9-48c6-a1a6-86a161195542"
+    },
+    "subscriberId": "UHC-00071",
+    "beneficiary": {
+      "reference": "Patient/8666cd40-7af9-48c6-a1a6-86a161195542"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-28T22:08:35-04:00",
+      "end": "2021-04-28T22:08:35-04:00"
+    },
+    "payor": [
+      {
+        "display": "UnitedHealthcare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "UnitedHealthcare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-84d4bafe",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/84d4bafe-1891-4e6c-b8aa-38d2eafd8193"
+    },
+    "subscriberId": "NONE-00072",
+    "beneficiary": {
+      "reference": "Patient/84d4bafe-1891-4e6c-b8aa-38d2eafd8193"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-29T16:42:18-04:00",
+      "end": "2021-04-29T16:42:18-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-0fe762e3",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Humana"
+        }
+      ],
+      "text": "Humana"
+    },
+    "subscriber": {
+      "reference": "Patient/0fe762e3-9350-4387-98d4-a7e8a739d4e1"
+    },
+    "subscriberId": "HUM-00073",
+    "beneficiary": {
+      "reference": "Patient/0fe762e3-9350-4387-98d4-a7e8a739d4e1"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-11-30T14:48:05-05:00",
+      "end": "2020-11-30T14:48:05-05:00"
+    },
+    "payor": [
+      {
+        "display": "Humana"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Humana"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-e583bad4",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/e583bad4-06df-45b6-a9a4-33857408c0b5"
+    },
+    "subscriberId": "BCBS-00074",
+    "beneficiary": {
+      "reference": "Patient/e583bad4-06df-45b6-a9a4-33857408c0b5"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-11-03T10:21:40-05:00",
+      "end": "2020-11-03T10:21:40-05:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-687eb477",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/687eb477-32ae-44ac-a0ef-2912623a14ff"
+    },
+    "subscriberId": "AET-00075",
+    "beneficiary": {
+      "reference": "Patient/687eb477-32ae-44ac-a0ef-2912623a14ff"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-11-03T12:33:06-05:00",
+      "end": "2020-11-03T12:33:06-05:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-c1981741",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/c1981741-f90e-4077-9156-429a3c4c5ded"
+    },
+    "subscriberId": "BCBS-00076",
+    "beneficiary": {
+      "reference": "Patient/c1981741-f90e-4077-9156-429a3c4c5ded"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-16T02:46:11-04:00",
+      "end": "2021-04-16T02:46:11-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-1ad52ff0",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/1ad52ff0-428a-4048-aff8-f7196a2da649"
+    },
+    "subscriberId": "AET-00077",
+    "beneficiary": {
+      "reference": "Patient/1ad52ff0-428a-4048-aff8-f7196a2da649"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-29T17:19:08-04:00",
+      "end": "2021-04-29T17:19:08-04:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-221fe1ec",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "FFS",
+          "display": "Medicaid"
+        }
+      ],
+      "text": "Medicaid"
+    },
+    "subscriber": {
+      "reference": "Patient/221fe1ec-a258-4fc4-8cc8-b7c960a8a0a9"
+    },
+    "subscriberId": "MCD-00078",
+    "beneficiary": {
+      "reference": "Patient/221fe1ec-a258-4fc4-8cc8-b7c960a8a0a9"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-01-24T09:28:11-05:00",
+      "end": "2021-01-24T09:28:11-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicaid"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "FFS",
+        "name": "Medicaid"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-62247e85",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Humana"
+        }
+      ],
+      "text": "Humana"
+    },
+    "subscriber": {
+      "reference": "Patient/62247e85-c8c1-4047-90b3-e0b3a9c59600"
+    },
+    "subscriberId": "HUM-00079",
+    "beneficiary": {
+      "reference": "Patient/62247e85-c8c1-4047-90b3-e0b3a9c59600"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-21T10:24:26-05:00",
+      "end": "2021-02-21T10:24:26-05:00"
+    },
+    "payor": [
+      {
+        "display": "Humana"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Humana"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-0dc5a831",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "EPO",
+          "display": "Anthem"
+        }
+      ],
+      "text": "Anthem"
+    },
+    "subscriber": {
+      "reference": "Patient/0dc5a831-6ccd-4510-80bf-19bb3ce69724"
+    },
+    "subscriberId": "ANT-00080",
+    "beneficiary": {
+      "reference": "Patient/0dc5a831-6ccd-4510-80bf-19bb3ce69724"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-06-19T04:44:20-04:00",
+      "end": "2020-06-19T04:44:20-04:00"
+    },
+    "payor": [
+      {
+        "display": "Anthem"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "EPO",
+        "name": "Anthem"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-af9d61c1",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Humana"
+        }
+      ],
+      "text": "Humana"
+    },
+    "subscriber": {
+      "reference": "Patient/af9d61c1-30b4-452b-9f07-abe1cb6d0a12"
+    },
+    "subscriberId": "HUM-00081",
+    "beneficiary": {
+      "reference": "Patient/af9d61c1-30b4-452b-9f07-abe1cb6d0a12"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-23T20:36:56-05:00",
+      "end": "2021-02-23T20:36:56-05:00"
+    },
+    "payor": [
+      {
+        "display": "Humana"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Humana"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-7646ecba",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "UnitedHealthcare"
+        }
+      ],
+      "text": "UnitedHealthcare"
+    },
+    "subscriber": {
+      "reference": "Patient/7646ecba-4812-452e-88e7-6235f77dabb2"
+    },
+    "subscriberId": "UHC-00082",
+    "beneficiary": {
+      "reference": "Patient/7646ecba-4812-452e-88e7-6235f77dabb2"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-06T03:39:50-05:00",
+      "end": "2021-02-06T03:39:50-05:00"
+    },
+    "payor": [
+      {
+        "display": "UnitedHealthcare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "UnitedHealthcare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-8f8ec634",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/8f8ec634-25f0-422d-a3fa-7a54c9575f6c"
+    },
+    "subscriberId": "AET-00083",
+    "beneficiary": {
+      "reference": "Patient/8f8ec634-25f0-422d-a3fa-7a54c9575f6c"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-21T02:27:05-04:00",
+      "end": "2021-04-21T02:27:05-04:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-3ca9f003",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Humana"
+        }
+      ],
+      "text": "Humana"
+    },
+    "subscriber": {
+      "reference": "Patient/3ca9f003-e6dd-4110-b4c2-12c056b880f4"
+    },
+    "subscriberId": "HUM-00084",
+    "beneficiary": {
+      "reference": "Patient/3ca9f003-e6dd-4110-b4c2-12c056b880f4"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-17T16:33:22-04:00",
+      "end": "2021-04-17T16:33:22-04:00"
+    },
+    "payor": [
+      {
+        "display": "Humana"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Humana"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-a67fbff8",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/a67fbff8-6216-4925-a233-453a1968dd3a"
+    },
+    "subscriberId": "AET-00085",
+    "beneficiary": {
+      "reference": "Patient/a67fbff8-6216-4925-a233-453a1968dd3a"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-02T04:01:38-05:00",
+      "end": "2021-02-02T04:01:38-05:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-9d7f402a",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Aetna"
+        }
+      ],
+      "text": "Aetna"
+    },
+    "subscriber": {
+      "reference": "Patient/9d7f402a-7c7e-4abe-9e59-9220e3874875"
+    },
+    "subscriberId": "AET-00086",
+    "beneficiary": {
+      "reference": "Patient/9d7f402a-7c7e-4abe-9e59-9220e3874875"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-11-13T09:41:56-05:00",
+      "end": "2020-11-13T09:41:56-05:00"
+    },
+    "payor": [
+      {
+        "display": "Aetna"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Aetna"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-4026988c",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/4026988c-ab06-4635-8c53-86cbad7b1c56"
+    },
+    "subscriberId": "BCBS-00087",
+    "beneficiary": {
+      "reference": "Patient/4026988c-ab06-4635-8c53-86cbad7b1c56"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-03-13T17:51:03-04:00",
+      "end": "2020-03-13T17:51:03-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-25b0b189",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "UnitedHealthcare"
+        }
+      ],
+      "text": "UnitedHealthcare"
+    },
+    "subscriber": {
+      "reference": "Patient/25b0b189-bc53-4025-af86-9038ee1b8d20"
+    },
+    "subscriberId": "UHC-00088",
+    "beneficiary": {
+      "reference": "Patient/25b0b189-bc53-4025-af86-9038ee1b8d20"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-01-23T23:06:40-05:00",
+      "end": "2021-01-23T23:06:40-05:00"
+    },
+    "payor": [
+      {
+        "display": "UnitedHealthcare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "UnitedHealthcare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-d33efe23",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "FFS",
+          "display": "Medicaid"
+        }
+      ],
+      "text": "Medicaid"
+    },
+    "subscriber": {
+      "reference": "Patient/d33efe23-cef9-40e5-a7c0-6d68c1349e51"
+    },
+    "subscriberId": "MCD-00089",
+    "beneficiary": {
+      "reference": "Patient/d33efe23-cef9-40e5-a7c0-6d68c1349e51"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-09-03T22:18:00-04:00",
+      "end": "2020-09-03T22:18:00-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicaid"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "FFS",
+        "name": "Medicaid"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-a64211bc",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Cigna Health"
+        }
+      ],
+      "text": "Cigna Health"
+    },
+    "subscriber": {
+      "reference": "Patient/a64211bc-5bd9-40b7-b7d9-f0637b87e60d"
+    },
+    "subscriberId": "CGN-00090",
+    "beneficiary": {
+      "reference": "Patient/a64211bc-5bd9-40b7-b7d9-f0637b87e60d"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-05-06T04:35:36-04:00",
+      "end": "2021-05-06T04:35:36-04:00"
+    },
+    "payor": [
+      {
+        "display": "Cigna Health"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Cigna Health"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-beb1b2a4",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/beb1b2a4-9198-462f-ae9d-972f173bd2b1"
+    },
+    "subscriberId": "BCBS-00091",
+    "beneficiary": {
+      "reference": "Patient/beb1b2a4-9198-462f-ae9d-972f173bd2b1"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-11-27T02:41:45-05:00",
+      "end": "2020-11-27T02:41:45-05:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-733abdda",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/733abdda-2bfa-485f-9c83-ed9b206889b2"
+    },
+    "subscriberId": "NONE-00092",
+    "beneficiary": {
+      "reference": "Patient/733abdda-2bfa-485f-9c83-ed9b206889b2"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-11T10:22:58-04:00",
+      "end": "2021-04-11T10:22:58-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-5efb1ac1",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "UnitedHealthcare"
+        }
+      ],
+      "text": "UnitedHealthcare"
+    },
+    "subscriber": {
+      "reference": "Patient/5efb1ac1-d29b-40a5-a3d1-2d682f10bfa7"
+    },
+    "subscriberId": "UHC-00093",
+    "beneficiary": {
+      "reference": "Patient/5efb1ac1-d29b-40a5-a3d1-2d682f10bfa7"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2018-05-20T08:16:45-04:00",
+      "end": "2019-05-20T08:16:45-04:00"
+    },
+    "payor": [
+      {
+        "display": "UnitedHealthcare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "UnitedHealthcare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-538a9a4e",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/538a9a4e-8437-47d3-8c01-1a17dca8f0be"
+    },
+    "subscriberId": "MCR-00094",
+    "beneficiary": {
+      "reference": "Patient/538a9a4e-8437-47d3-8c01-1a17dca8f0be"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-02-15T19:00:58-05:00",
+      "end": "2021-02-15T19:00:58-05:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-3b1a9cb0",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "HMO",
+          "display": "Humana"
+        }
+      ],
+      "text": "Humana"
+    },
+    "subscriber": {
+      "reference": "Patient/3b1a9cb0-e3d3-4bce-8b20-864c3dc7e8c0"
+    },
+    "subscriberId": "HUM-00095",
+    "beneficiary": {
+      "reference": "Patient/3b1a9cb0-e3d3-4bce-8b20-864c3dc7e8c0"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-01-10T11:46:36-05:00",
+      "end": "2021-01-10T11:46:36-05:00"
+    },
+    "payor": [
+      {
+        "display": "Humana"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "HMO",
+        "name": "Humana"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-daf4e787",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "Blue Cross Blue Shield"
+        }
+      ],
+      "text": "Blue Cross Blue Shield"
+    },
+    "subscriber": {
+      "reference": "Patient/daf4e787-0ea5-45ff-a9a1-c68308e9f6a3"
+    },
+    "subscriberId": "BCBS-00096",
+    "beneficiary": {
+      "reference": "Patient/daf4e787-0ea5-45ff-a9a1-c68308e9f6a3"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-10-02T02:06:01-04:00",
+      "end": "2020-10-02T02:06:01-04:00"
+    },
+    "payor": [
+      {
+        "display": "Blue Cross Blue Shield"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "Blue Cross Blue Shield"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-ffa66c0a",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PART-B",
+          "display": "Medicare"
+        }
+      ],
+      "text": "Medicare"
+    },
+    "subscriber": {
+      "reference": "Patient/ffa66c0a-87b0-4b78-bb7e-3a5c7c44d359"
+    },
+    "subscriberId": "MCR-00097",
+    "beneficiary": {
+      "reference": "Patient/ffa66c0a-87b0-4b78-bb7e-3a5c7c44d359"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-10-14T18:05:54-04:00",
+      "end": "2020-10-14T18:05:54-04:00"
+    },
+    "payor": [
+      {
+        "display": "Medicare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PART-B",
+        "name": "Medicare"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-c2f03d5b",
+    "status": "cancelled",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "NONE",
+          "display": "NO_INSURANCE"
+        }
+      ],
+      "text": "NO_INSURANCE"
+    },
+    "subscriber": {
+      "reference": "Patient/c2f03d5b-7219-4dec-bcc6-03ee42166769"
+    },
+    "subscriberId": "NONE-00098",
+    "beneficiary": {
+      "reference": "Patient/c2f03d5b-7219-4dec-bcc6-03ee42166769"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-03-22T16:40:00-04:00",
+      "end": "2021-03-22T16:40:00-04:00"
+    },
+    "payor": [
+      {
+        "display": "NO_INSURANCE"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "NONE",
+        "name": "NO_INSURANCE"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-39699402",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "EPO",
+          "display": "Anthem"
+        }
+      ],
+      "text": "Anthem"
+    },
+    "subscriber": {
+      "reference": "Patient/39699402-f976-4fa0-8635-f015a54f1f8b"
+    },
+    "subscriberId": "ANT-00099",
+    "beneficiary": {
+      "reference": "Patient/39699402-f976-4fa0-8635-f015a54f1f8b"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2020-04-19T07:11:36-04:00",
+      "end": "2021-04-19T07:11:36-04:00"
+    },
+    "payor": [
+      {
+        "display": "Anthem"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "EPO",
+        "name": "Anthem"
+      }
+    ]
+  },
+  {
+    "resourceType": "Coverage",
+    "id": "cov-7cdaae04",
+    "status": "active",
+    "type": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "PPO",
+          "display": "UnitedHealthcare"
+        }
+      ],
+      "text": "UnitedHealthcare"
+    },
+    "subscriber": {
+      "reference": "Patient/7cdaae04-4ce7-4a6d-b6a3-5cddba9bc888"
+    },
+    "subscriberId": "UHC-00100",
+    "beneficiary": {
+      "reference": "Patient/7cdaae04-4ce7-4a6d-b6a3-5cddba9bc888"
+    },
+    "relationship": {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+          "code": "self",
+          "display": "Self"
+        }
+      ]
+    },
+    "period": {
+      "start": "2019-09-20T00:44:11-04:00",
+      "end": "2020-09-20T00:44:11-04:00"
+    },
+    "payor": [
+      {
+        "display": "UnitedHealthcare"
+      }
+    ],
+    "class": [
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+              "code": "plan"
+            }
+          ]
+        },
+        "value": "PPO",
+        "name": "UnitedHealthcare"
+      }
+    ]
+  }
+]
