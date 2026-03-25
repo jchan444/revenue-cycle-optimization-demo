@@ -59,7 +59,7 @@ export const fetchClaims = async (): Promise<Claim[]> => {
   try {
     const response = await API.get("/claims");
 
-    return response.data.map((c: any) => formatClaim(c));
+    return response.data.map((data: any) => formatClaim(data));
   } catch (error) {
     handleError(error);
   }
