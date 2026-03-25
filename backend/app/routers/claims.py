@@ -12,5 +12,6 @@ def get_claims():
 
 @router.post("/validate")
 def validate_claim(claim: Claim):
-    return {
-    }
+    # Call the shared validator and return its result
+    validation_result = validate_claim_data(claim.dict())
+    return validation_result
