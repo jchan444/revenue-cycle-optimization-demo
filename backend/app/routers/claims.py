@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-from app.models.claim import Claim
+from fastapi import APIRouter, Body
 from app.services.validator import validate_claim_data
 
 router = APIRouter(
@@ -11,6 +10,6 @@ def get_claims():
 
 
 @router.post("/validate")
-def validate_claim(claim: Claim):
-    return {
-    }
+def validate_claim(claim: dict = Body(...)):
+    validation_result = validate_claim_data(claim)
+    return validation_result
