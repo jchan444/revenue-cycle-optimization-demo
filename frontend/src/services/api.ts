@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-// import { Claim, ValidationResponse } from "../types/claim";
+import { Claim, ValidationResponse, BackendClaim } from "../types/claim";
 
 //axios instance
 const API = axios.create({
@@ -15,7 +15,7 @@ const handleError = (error: unknown): never => {
     if (axiosError.response) {
       //if the server responded with error
       throw new Error(
-        axiosError.response.data?.message || "Backend server error occurred"
+        axiosError.response.data?.detail || "Backend server error occurred"
       );
     } else if (axiosError.request) {
       //no response received from backend
@@ -30,27 +30,24 @@ const handleError = (error: unknown): never => {
   throw new Error("Unexpected error occurred");
 };
 
-//reformat claim data if needed?
-const formatClaim = (data: any): Claim => {
-  let id;
-  if (data.id !== undefined && data.id !== null) {
-    id = data.id;
-  } else {
-    id = data.claim_id;
-  }
-
-  let patient;
-  if (data.patient !== undefined && data.patient !== null) {
-    patient = data.patient;
-  } else {
-    patient = data.patient_name;
-  }
-
+//format to send to frontend
+const formatClaim = (data: BackendClaim): Claim => {
   return {
-    id: id,
-    patient: patient,
+    id: data.id,
+    patient: data.patient_id,
     amount: data.amount,
-    procedure: data.procedure,
+    procedure: data.procedure_code,
+  };
+};
+
+//format frontend → backend
+const formatClaimForBackend = (claim: Claim) => {
+  return {
+    id: claim.id,
+    patient_id: claim.patient,
+    procedure_code: claim.procedure,
+    insurance_id: "placeholder", //place
+    amount: claim.amount,
   };
 };
 
@@ -62,47 +59,24 @@ export const fetchClaims = async (): Promise<Claim[]> => {
     return response.data.map((data: any) => formatClaim(data));
   } catch (error) {
     handleError(error);
+    throw error;
   }
 };
 
 //POST request - validate
-export const validateClaim = async (
-  claimId: string
-): Promise<ValidationResponse> => {
+export const validateClaim = async (claim: Claim): Promise<ValidationResponse> => {
   try {
-    const response = await API.post("/validate", { id: claimId });
+    const payload = formatClaimForBackend(claim);
+
+    const response = await API.post("/validate", payload);
 
     const data = response.data;
 
-    let claimIdResult;
-
-    if (data.claimId !== undefined && data.claimId !== null) {
-      claimIdResult = data.claimId;
-    } else {
-      claimIdResult = data.id;
-    }
-
-    let coverageStatus;
-    if (data.coverageStatus !== undefined && data.coverageStatus !== null) {
-      coverageStatus = data.coverageStatus;
-    } else {
-      coverageStatus = data.coverage;
-    }
-
-    let errors;
-
-    if (data.errors !== undefined && data.errors !== null) {
-      errors = data.errors;
-    } else {
-      errors = [];
-    }
-
-    //placeholder for data for now
     return {
-      claimId: claimIdResult,
-      status: data.status,
-      coverageStatus: coverageStatus,
-      errors: errors,
+      claimId: claim.id,
+      status: data.valid ? "valid" : "invalid",
+      coverageStatus: data.valid ? "covered" : "not_covered",
+      errors: data.errors || [],
     };
   } catch (error) {
     handleError(error);
