@@ -16,7 +16,6 @@ class Claim(BaseModel):
     status: Optional[str] = "pending"
     payload: Optional[dict] = None
 
-# In-memory store for demo/testing
 _claim_store: dict = {}
 
 @router.get("/", response_model=List[Claim])
