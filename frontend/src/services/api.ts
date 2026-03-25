@@ -30,8 +30,8 @@ const handleError = (error: unknown): never => {
   throw new Error("Unexpected error occurred");
 };
 
-//format to send to frontend
-const formatClaim = (data: BackendClaim): Claim => {
+//format to send to frontend - update if needed for FRONTEND
+const formatClaimForFrontend = (data: BackendClaim): Claim => {
   return {
     id: data.id,
     patient: data.patient_id,
@@ -46,7 +46,7 @@ const formatClaimForBackend = (claim: Claim) => {
     id: claim.id,
     patient_id: claim.patient,
     procedure_code: claim.procedure,
-    insurance_id: "placeholder", //place
+    insurance_id: "placeholder", //placeholder
     amount: claim.amount,
   };
 };
@@ -56,7 +56,7 @@ export const fetchClaims = async (): Promise<Claim[]> => {
   try {
     const response = await API.get("/claims");
 
-    return response.data.map((data: any) => formatClaim(data));
+    return response.data.map((data: any) => formatClaimForFrontend(data));
   } catch (error) {
     handleError(error);
     throw error;
@@ -71,7 +71,8 @@ export const validateClaim = async (claim: Claim): Promise<ValidationResponse> =
     const response = await API.post("/validate", payload);
 
     const data = response.data;
-
+    
+    //update if needed for BACKEND -> FRONTEND
     return {
       claimId: claim.id,
       status: data.valid ? "valid" : "invalid",
