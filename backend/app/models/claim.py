@@ -42,7 +42,6 @@ def update_claim(claim_id: str, updated: Claim):
     existing = _claim_store.get(claim_id)
     if not existing:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Claim not found")
-    # Preserve id from path
     updated.id = claim_id
     _claim_store[claim_id] = updated
     return updated
