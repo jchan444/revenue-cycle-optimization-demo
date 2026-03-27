@@ -1,5 +1,11 @@
 import axios, { AxiosError } from "axios";
-import { Claim, ValidationResponse, BackendClaim } from "../types/claim";
+import {
+  Claim,
+  ValidationResponse,
+  BackendClaim,
+  PatientSummary,
+  OptimizeRequest,
+} from "../types/claim";
 
 //axios instance
 const API = axios.create({
@@ -26,7 +32,7 @@ const handleError = (error: unknown): never => {
     }
   }
 
-  //unknown error 
+  //unknown error
   throw new Error("Unexpected error occurred");
 };
 
@@ -37,6 +43,8 @@ const formatClaimForFrontend = (data: BackendClaim): Claim => {
     patient: data.patient_id,
     amount: data.amount,
     procedure: data.procedure_code,
+    payerRuleStatus: data.payer_rule_status,
+    payerRuleMessage: data.payer_rule_message,
   };
 };
 
@@ -54,7 +62,7 @@ const formatClaimForBackend = (claim: Claim) => {
 //GET claims
 export const fetchClaims = async (): Promise<Claim[]> => {
   try {
-    const response = await API.get("/claims");
+    const response = await API.get("/api/claims");
 
     return response.data.map((data: any) => formatClaimForFrontend(data));
   } catch (error) {
@@ -63,15 +71,46 @@ export const fetchClaims = async (): Promise<Claim[]> => {
   }
 };
 
+export const fetchPatient = async (id: string): Promise<PatientSummary> => {
+  try {
+    const response = await API.get(`/api/patient/${id}`);
+    const data = response.data;
+    return {
+      id,
+      name: data?.name ?? "Unknown Patient",
+      age: data?.age ?? 0,
+      gender: data?.gender ?? "unknown",
+      primaryCondition: data?.primaryCondition ?? "Not provided",
+    };
+  } catch (error) {
+    handleError(error);
+    throw error;
+  }
+};
+
+export const optimizeClaims = async (
+  payload: OptimizeRequest
+): Promise<ValidationResponse[]> => {
+  try {
+    const response = await API.post("/api/optimize", payload);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+    throw error;
+  }
+};
+
 //POST request - validate
-export const validateClaim = async (claim: Claim): Promise<ValidationResponse> => {
+export const validateClaim = async (
+  claim: Claim
+): Promise<ValidationResponse> => {
   try {
     const payload = formatClaimForBackend(claim);
 
     const response = await API.post("/validate", payload);
 
     const data = response.data;
-    
+
     //update if needed for BACKEND -> FRONTEND
     return {
       claimId: claim.id,

@@ -3,6 +3,8 @@ export interface Claim {
   patient: string;
   procedure: string;
   amount: number;
+  payerRuleStatus?: "aligned" | "violated";
+  payerRuleMessage?: string;
 }
 
 export interface ValidationResponse {
@@ -18,4 +20,18 @@ export interface BackendClaim {
   procedure_code: string;
   insurance_id: string;
   amount: number;
+  payer_rule_status?: "aligned" | "violated";
+  payer_rule_message?: string;
+}
+
+export interface PatientSummary {
+  id: string;
+  name: string;
+  age: number;
+  gender: string;
+  primaryCondition: string;
+}
+
+export interface OptimizeRequest {
+  claimIds: string[];
 }
