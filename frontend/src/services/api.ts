@@ -54,49 +54,42 @@ const formatClaimForBackend = (claim: Claim) => {
     id: claim.id,
     patient_id: claim.patient,
     procedure_code: claim.procedure,
-    insurance_id: "placeholder", //placeholder
+    insurance_id: "placeholder", //placeholder? backend doesn't need this?
     amount: claim.amount,
   };
 };
 
+//API CALLS
 //GET claims
 export const fetchClaims = async (): Promise<Claim[]> => {
   try {
-    const response = await API.get("/api/claims");
+    const response = await API.get("/claims");
 
     return response.data.map((data: any) => formatClaimForFrontend(data));
   } catch (error) {
-    handleError(error);
-    throw error;
+    return handleError(error);
   }
 };
 
-export const fetchPatient = async (id: string): Promise<PatientSummary> => {
+//GET single claim by ID
+export const fetchClaimById = async (id: string): Promise<Claim> => {
   try {
-    const response = await API.get(`/api/patient/${id}`);
-    const data = response.data;
-    return {
-      id,
-      name: data?.name ?? "Unknown Patient",
-      age: data?.age ?? 0,
-      gender: data?.gender ?? "unknown",
-      primaryCondition: data?.primaryCondition ?? "Not provided",
-    };
+    const response = await API.get<BackendClaim>(`/claims/${id}`);
+
+    return formatClaimForFrontend(response.data);
   } catch (error) {
-    handleError(error);
-    throw error;
+    return handleError(error);
   }
 };
 
-export const optimizeClaims = async (
-  payload: OptimizeRequest
-): Promise<ValidationResponse[]> => {
+//POST create claim
+export const createClaim = async (claim: Claim): Promise<Claim> => {
   try {
-    const response = await API.post("/api/optimize", payload);
-    return response.data;
+    const payload = formatClaimForBackend(claim);
+    const response = await API.post<BackendClaim>("/claims", payload);
+    return formatClaimForFrontend(response.data);
   } catch (error) {
-    handleError(error);
-    throw error;
+    return handleError(error);
   }
 };
 
@@ -119,7 +112,35 @@ export const validateClaim = async (
       errors: data.errors || [],
     };
   } catch (error) {
-    handleError(error);
-    throw error;
+    return handleError(error);
   }
 };
+
+
+export const fetchPatient = async (id: string): Promise<PatientSummary> => {
+  try {
+    const response = await API.get(`/api/patient/${id}`);
+    const data = response.data;
+    return {
+      id,
+      name: data?.name ?? "Unknown Patient",
+      age: data?.age ?? 0,
+      gender: data?.gender ?? "unknown",
+      primaryCondition: data?.primaryCondition ?? "Not provided",
+    };
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const optimizeClaims = async (
+  payload: OptimizeRequest
+): Promise<ValidationResponse[]> => {
+  try {
+    const response = await API.post("/api/optimize", payload);
+    return response.data;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
