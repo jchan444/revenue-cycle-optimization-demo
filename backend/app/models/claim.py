@@ -1,4 +1,6 @@
-from typing import List, Optional
+import json
+from pathlib import Path
+from typing import Any, List, Optional
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, Field
 import uuid
@@ -16,58 +18,124 @@ class Claim(BaseModel):
     status: Optional[str] = "pending"
     payload: Optional[dict] = None
 
-_claim_store: dict = {}
+
+def _data_file_path() -> Path:
+    return Path(__file__).resolve().parents[3] / "data" / "FHIR_data" / "Claim.json"
+
+
+def _extract_reference_id(value: Any) -> str:
+    if not isinstance(value, str):
+        return ""
+    return value.split("/")[-1]
+
+
+def _extract_procedure_code(resource: dict[str, Any]) -> str:
+    items = resource.get("item") or []
+    if not items:
+        return ""
+
+    product = items[0].get("productOrService") or {}
+    coding = product.get("coding") or []
+    primary_code = coding[0] if coding else {}
+
+    return (
+        product.get("text")
+        or primary_code.get("display")
+        or primary_code.get("code")
+        or ""
+    )
+
+
+def _extract_amount(resource: dict[str, Any]) -> float:
+    total = resource.get("total") or {}
+    if isinstance(total.get("value"), (int, float)):
+        return float(total["value"])
+
+    item_total = 0.0
+    for item in resource.get("item") or []:
+        net = item.get("net") or {}
+        if isinstance(net.get("value"), (int, float)):
+            item_total += float(net["value"])
+    return item_total
+
+
+def _fhir_claim_to_claim_payload(resource: dict[str, Any]) -> dict[str, Any]:
+    patient = resource.get("patient") or {}
+    insurance = (resource.get("insurance") or [{}])[0]
+    coverage = insurance.get("coverage") or {}
+
+    return {
+        "id": resource.get("id") or str(uuid.uuid4()),
+        "patient_id": _extract_reference_id(patient.get("reference")),
+        "procedure_code": _extract_procedure_code(resource),
+        "insurance_id": (
+            _extract_reference_id(coverage.get("reference"))
+            or coverage.get("display")
+            or ""
+        ),
+        "diagnosis_code": (
+            _extract_reference_id(
+                ((resource.get("diagnosis") or [{}])[0].get("diagnosisReference") or {}).get("reference")
+            )
+        ),
+        "amount": _extract_amount(resource),
+        "status": resource.get("status") or "pending",
+        "payload": resource,
+    }
+
+
+def _load_claim_store() -> dict[str, "Claim"]:
+    file_path = _data_file_path()
+    if not file_path.exists():
+        return {}
+
+    with file_path.open("r", encoding="utf-8") as source:
+        raw_claims = json.load(source)
+
+    claim_store: dict[str, Claim] = {}
+    for resource in raw_claims:
+        claim = Claim(**_fhir_claim_to_claim_payload(resource))
+        claim_store[claim.id] = claim
+    return claim_store
+
+
+_claim_store: dict[str, Claim] = _load_claim_store()
+
 
 @router.get("/", response_model=List[Claim])
 def list_claims():
-    """Return all claims currently stored in memory."""
     return list(_claim_store.values())
 
 
 @router.get("/{claim_id}", response_model=Claim)
 def get_claim(claim_id: str):
-    """Fetch a single claim by its ID, or raise 404 if missing."""
     claim = _claim_store.get(claim_id)
     if not claim:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Claim not found")
     return claim
 
-
-def condition_to_claim_payload(condition: dict) -> dict:
-    """Convert a FHIR Condition object into internal Claim fields."""
-    patient_reference = condition.get("subject", {}).get("reference", "")
-    encounter_reference = condition.get("encounter", {}).get("reference", "")
-    procedure_coding = condition.get("code", {}).get("coding", [{}])[0]
-
-    return {
-        "patient_id": patient_reference.split("/")[-1] if patient_reference else "",
-        "procedure_code": procedure_coding.get("code", ""),
-        "insurance_id": encounter_reference.split("/")[-1] if encounter_reference else "",
-        "diagnosis_code": condition.get("code", {}).get("text"),
-        "amount": float(condition.get("amount", 0) or 0),
-        "payload": condition,
-    }
-
-
-@router.post("/import-fhir", response_model=List[Claim], status_code=status.HTTP_201_CREATED)
-def import_fhir_conditions(conditions: List[dict]):
-    """Import FHIR Condition list to Claim model and store in memory."""
-    created_claims: List[Claim] = []
-    for condition in conditions:
-        payload = condition_to_claim_payload(condition)
-        claim = Claim(**payload)
-        if claim.id in _claim_store:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Claim ID already exists: {claim.id}")
-        _claim_store[claim.id] = claim
-        created_claims.append(claim)
-    return created_claims
-
-
 @router.post("/", response_model=Claim, status_code=status.HTTP_201_CREATED)
 def create_claim(claim: Claim):
-    """Create a new claim and return it, enforcing unique ID."""
     if claim.id in _claim_store:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Claim ID already exists")
     _claim_store[claim.id] = claim
     return claim
+
+
+@router.put("/{claim_id}", response_model=Claim)
+def update_claim(claim_id: str, updated: Claim):
+    existing = _claim_store.get(claim_id)
+    if not existing:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Claim not found")
+    updated.id = claim_id
+    _claim_store[claim_id] = updated
+    return updated
+
+
+@router.delete("/{claim_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_claim(claim_id: str):
+    if claim_id not in _claim_store:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Claim not found")
+    del _claim_store[claim_id]
+    return
 

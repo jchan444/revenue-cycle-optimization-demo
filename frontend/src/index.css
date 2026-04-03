@@ -2,6 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --rcm-bg: #eef4f7;
+  --rcm-ink: #06202c;
+  --rcm-panel: rgba(255, 255, 255, 0.82);
+  --rcm-cyan: #0891b2;
+  --rcm-teal: #0f766e;
+  --rcm-shadow: 0 24px 80px rgba(6, 32, 44, 0.12);
+  font-family: "IBM Plex Sans", "Aptos", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background:
+    radial-gradient(circle at top left, rgba(8, 145, 178, 0.2), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(15, 118, 110, 0.12), transparent 24%),
+    linear-gradient(180deg, #f5fbfd 0%, var(--rcm-bg) 100%);
+}
+
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--rcm-ink);
+  background: transparent;
+  font-family: "IBM Plex Sans", "Aptos", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.rcm-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.rcm-shell::before,
+.rcm-shell::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(14px);
+}
+
+.rcm-shell::before {
+  top: -8rem;
+  left: -6rem;
+  width: 18rem;
+  height: 18rem;
+  background: rgba(34, 211, 238, 0.15);
+}
+
+.rcm-shell::after {
+  right: -5rem;
+  top: 22rem;
+  width: 16rem;
+  height: 16rem;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.rcm-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(3, 7, 18, 0.92), rgba(8, 47, 73, 0.88)),
+    linear-gradient(120deg, rgba(8, 145, 178, 0.35), rgba(20, 184, 166, 0.18));
+  box-shadow: var(--rcm-shadow);
+}
+
+.hero-panel::after {
+  position: absolute;
+  inset: auto -4rem -6rem auto;
+  width: 18rem;
+  height: 18rem;
+  content: "";
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.34), transparent 62%);
+}
+
+.hero-stat-grid > * {
+  min-width: 0;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.claim-row,
+.detail-panel,
+.patient-card-shell section {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+.patient-card-shell section {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.patient-card-shell h2,
+.patient-card-shell dt,
+.patient-card-shell dd {
+  color: white;
+}
+
+.patient-card-shell dd {
+  opacity: 0.88;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+@media (max-width: 768px) {
+  .hero-panel::after {
+    right: -6rem;
+    bottom: -8rem;
+  }
 }
