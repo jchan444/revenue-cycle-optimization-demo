@@ -2,6 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --rcm-bg: #eef4f7;
+  --rcm-ink: #06202c;
+  font-family: "IBM Plex Sans", "Aptos", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background:
+    radial-gradient(circle at top left, rgba(8, 145, 178, 0.2), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(15, 118, 110, 0.12), transparent 24%),
+    linear-gradient(180deg, #f5fbfd 0%, var(--rcm-bg) 100%);
+}
+
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--rcm-ink);
+  background: transparent;
+  font-family: "IBM Plex Sans", "Aptos", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.rcm-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.rcm-shell::before,
+.rcm-shell::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(14px);
+}
+
+.rcm-shell::before {
+  top: -8rem;
+  left: -6rem;
+  width: 18rem;
+  height: 18rem;
+  background: rgba(34, 211, 238, 0.15);
+}
+
+.rcm-shell::after {
+  right: -5rem;
+  top: 22rem;
+  width: 16rem;
+  height: 16rem;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.rcm-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+input,
+select,
+button {
+  font: inherit;
 }

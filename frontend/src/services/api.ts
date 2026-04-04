@@ -5,106 +5,79 @@ import {
   BackendClaim,
   PatientSummary,
   OptimizeRequest,
+  getClaimAmount,
 } from "../types/claim";
 
-//axios instance
 const API = axios.create({
   baseURL: "http://localhost:8000",
   timeout: 5000,
 });
 
-//central error handler
 const handleError = (error: unknown): never => {
   if (axios.isAxiosError(error)) {
     const axiosError = error as AxiosError<any>;
 
     if (axiosError.response) {
-      //if the server responded with error
       throw new Error(
         axiosError.response.data?.detail || "Backend server error occurred"
       );
-    } else if (axiosError.request) {
-      //no response received from backend
-      throw new Error("No response from backend server");
-    } else {
-      //axios config error
-      throw new Error("Possible frontend Request setup error");
     }
+
+    if (axiosError.request) {
+      throw new Error("No response from backend server");
+    }
+
+    throw new Error("Possible frontend Request setup error");
   }
 
-  //unknown error
   throw new Error("Unexpected error occurred");
 };
 
-//format to send to frontend - update if needed for FRONTEND
 const formatClaimForFrontend = (data: BackendClaim): Claim => {
+  const claim = data.payload ?? data;
+
   return {
-    id: data.id,
-    patient: data.patient_id,
-    amount: data.amount,
-    procedure: data.procedure_code,
+    ...claim,
+    id: claim.id,
     payerRuleStatus: data.payer_rule_status,
     payerRuleMessage: data.payer_rule_message,
   };
 };
 
-//format frontend → backend
 const formatClaimForBackend = (claim: Claim) => {
   return {
     id: claim.id,
-    patient_id: claim.patient,
-    procedure_code: claim.procedure,
-    insurance_id: "placeholder", //placeholder? backend doesn't need this?
-    amount: claim.amount,
+    patient_id:
+      claim.patient?.reference?.split("/").pop() ?? claim.patient?.display ?? "",
+    procedure_code:
+      claim.item?.[0]?.productOrService?.coding?.[0]?.code ??
+      claim.item?.[0]?.productOrService?.text ??
+      "",
+    insurance_id:
+      claim.insurance?.[0]?.coverage?.reference?.split("/").pop() ??
+      claim.insurance?.[0]?.coverage?.display ??
+      "",
+    amount: getClaimAmount(claim),
   };
 };
 
-//API CALLS
-//GET claims
 export const fetchClaims = async (): Promise<Claim[]> => {
   try {
-    const response = await API.get("/claims");
-
-    return response.data.map((data: any) => formatClaimForFrontend(data));
+    const response = await API.get<BackendClaim[]>("/claims");
+    return response.data.map((data) => formatClaimForFrontend(data));
   } catch (error) {
     return handleError(error);
   }
 };
 
-//GET single claim by ID
-export const fetchClaimById = async (id: string): Promise<Claim> => {
-  try {
-    const response = await API.get<BackendClaim>(`/claims/${id}`);
-
-    return formatClaimForFrontend(response.data);
-  } catch (error) {
-    return handleError(error);
-  }
-};
-
-//POST create claim
-export const createClaim = async (claim: Claim): Promise<Claim> => {
-  try {
-    const payload = formatClaimForBackend(claim);
-    const response = await API.post<BackendClaim>("/claims", payload);
-    return formatClaimForFrontend(response.data);
-  } catch (error) {
-    return handleError(error);
-  }
-};
-
-//POST request - validate
 export const validateClaim = async (
   claim: Claim
 ): Promise<ValidationResponse> => {
   try {
     const payload = formatClaimForBackend(claim);
-
     const response = await API.post("/validate", payload);
-
     const data = response.data;
 
-    //update if needed for BACKEND -> FRONTEND
     return {
       claimId: claim.id,
       status: data.valid ? "valid" : "invalid",
@@ -115,7 +88,6 @@ export const validateClaim = async (
     return handleError(error);
   }
 };
-
 
 export const fetchPatient = async (id: string): Promise<PatientSummary> => {
   try {
@@ -143,4 +115,3 @@ export const optimizeClaims = async (
     return handleError(error);
   }
 };
-
