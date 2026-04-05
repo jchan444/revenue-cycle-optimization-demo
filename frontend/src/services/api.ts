@@ -74,7 +74,7 @@ const formatClaimForBackend = (claim: Claim) => {
 
 export const fetchClaims = async (): Promise<Claim[]> => {
   try {
-    const response = await API.get<BackendClaim[]>("/claims");
+    const response = await API.get<BackendClaim[]>("/claims/");
     return response.data.map((data) => formatClaimForFrontend(data));
   } catch (error) {
     return handleError(error);
