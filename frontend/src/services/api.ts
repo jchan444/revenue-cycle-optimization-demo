@@ -9,7 +9,7 @@ import {
 } from "../types/claim";
 
 const API = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: process.env.REACT_APP_API_URL as string || "http://localhost:8000",
   timeout: 5000,
 });
 
