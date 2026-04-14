@@ -11,6 +11,7 @@ router = APIRouter(prefix="/claims", tags=["claims"])
 class Claim(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     patient_id: str
+    provider_id: Optional[str] = None  # Sai added Provide id
     procedure_code: str
     insurance_id: str
     diagnosis_code: Optional[str] = None
@@ -67,6 +68,9 @@ def _fhir_claim_to_claim_payload(resource: dict[str, Any]) -> dict[str, Any]:
     return {
         "id": resource.get("id") or str(uuid.uuid4()),
         "patient_id": _extract_reference_id(patient.get("reference")),
+        "provider_id": _extract_reference_id(  # Sai added  3 lines for Provide id
+            (resource.get("provider") or {}).get("reference", "")
+        ),
         "procedure_code": _extract_procedure_code(resource),
         "insurance_id": (
             _extract_reference_id(coverage.get("reference"))

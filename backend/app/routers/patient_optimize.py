@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from app.models.claim import Claim, _claim_store
 from app.services.validator import validate_claim_data
+from app.services.fraud_detection_based_on_history import detect_fraud      # Sai added
 
 router = APIRouter(prefix="/api", tags=["api"])
 
@@ -77,3 +78,30 @@ def optimize(req: OptimizeRequest) -> List[dict[str, Any]]:
                 }
             )
     return results
+
+# Sai code begins
+class FraudDetectRequest(BaseModel):
+    provider_id: str = None
+    procedure_code: str = None
+    claims: List[Claim] = None
+
+
+class FraudDetectResponse(BaseModel):
+    denial_risk: str
+    denial_rate: float
+    global_denial_rate: float
+    matched_claims: int
+    total_claims: int
+    mode: str
+
+
+@router.post("/fraud/detect", response_model=FraudDetectResponse)
+def detect_fraud_endpoint(req: FraudDetectRequest) -> FraudDetectResponse:
+    claims: List[Claim] = req.claims if req.claims else list(_claim_store.values())
+    detected_results = detect_fraud(
+        claims=claims,
+        provider_id=req.provider_id or None,
+        procedure_code=req.procedure_code or None,
+    )
+    return FraudDetectResponse(**detected_results)  # ** unpacks output variables
+# Sai code ends
