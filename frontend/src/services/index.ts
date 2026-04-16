@@ -1,6 +1,7 @@
 export {
   fetchClaims,
   fetchPatient,
-  optimizeClaims,
+  updateClaimStatus,
+  validateClaims,
   validateClaim,
 } from "./api";

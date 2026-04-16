@@ -19,10 +19,23 @@ export interface Money {
   currency?: string;
 }
 
+export const CLAIM_STATUS_OPTIONS = [
+  "Active",
+  "Review",
+  "Cancelled",
+  "Denied",
+  "Approved",
+  "Resubmit",
+  "InProcess",
+  "Submitted",
+] as const;
+
+export type ClaimStatus = (typeof CLAIM_STATUS_OPTIONS)[number];
+
 export interface Claim {
   resourceType?: string;
   id: string;
-  status?: string;
+  status?: ClaimStatus | string;
   created?: string;
   use?: string;
   type?: CodeableConcept;
@@ -74,6 +87,7 @@ export interface ValidationResponse {
   status: "valid" | "invalid";
   coverageStatus: "covered" | "not_covered";
   errors: string[];
+  claimStatus?: ClaimStatus;
 }
 
 export interface BackendClaim extends Claim {
@@ -90,9 +104,22 @@ export interface PatientSummary {
   primaryCondition: string;
 }
 
-export interface OptimizeRequest {
+export interface ValidationRequest {
   claimIds: string[];
 }
+
+const CLAIM_STATUS_LABELS: Record<string, ClaimStatus> = {
+  active: "Active",
+  review: "Review",
+  cancelled: "Cancelled",
+  canceled: "Cancelled",
+  denied: "Denied",
+  approved: "Approved",
+  resubmit: "Resubmit",
+  inprocess: "InProcess",
+  submitted: "Submitted",
+  pending: "Active",
+};
 
 const getReferenceId = (value?: string): string => {
   if (!value) {
@@ -148,3 +175,31 @@ export const getClaimDiagnosisCount = (claim: Claim): number =>
 
 export const getClaimProcedureCount = (claim: Claim): number =>
   claim.procedure?.length ?? 0;
+
+export const getClaimStatusLabel = (claim: Claim): string =>
+  claim.status?.trim()
+    ? CLAIM_STATUS_LABELS[claim.status.trim().toLowerCase()] ?? claim.status
+    : "Unknown";
+
+export const canClaimBeSelectedForValidation = (claim: Claim): boolean => {
+  const status = getClaimStatusLabel(claim);
+  return status === "Active" || status === "Resubmit";
+};
+
+export const getClaimDateLabel = (claim: Claim): string => {
+  const rawDate = claim.created || claim.billablePeriod?.start || claim.billablePeriod?.end;
+  if (!rawDate) {
+    return "Unknown";
+  }
+
+  const parsed = new Date(rawDate);
+  if (Number.isNaN(parsed.getTime())) {
+    return rawDate;
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+  }).format(parsed);
+};
