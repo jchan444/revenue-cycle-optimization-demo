@@ -6,6 +6,29 @@ from pydantic import BaseModel, Field
 import uuid
 
 router = APIRouter(prefix="/claims", tags=["claims"])
+CLAIM_STATUS_OPTIONS = {
+    "Active",
+    "Review",
+    "Cancelled",
+    "Denied",
+    "Approved",
+    "Resubmit",
+    "InProcess",
+    "Submitted",
+}
+
+CLAIM_STATUS_ALIASES = {
+    "active": "Active",
+    "review": "Review",
+    "cancelled": "Cancelled",
+    "canceled": "Cancelled",
+    "denied": "Denied",
+    "approved": "Approved",
+    "resubmit": "Resubmit",
+    "inprocess": "InProcess",
+    "submitted": "Submitted",
+    "pending": "Active",
+}
 
 
 class Claim(BaseModel):
@@ -16,8 +39,12 @@ class Claim(BaseModel):
     insurance_id: str
     diagnosis_code: Optional[str] = None
     amount: float
-    status: Optional[str] = "pending"
+    status: Optional[str] = "Active"
     payload: Optional[dict] = None
+
+
+class ClaimStatusUpdate(BaseModel):
+    status: str
 
 
 def _data_file_path() -> Path:
@@ -83,9 +110,20 @@ def _fhir_claim_to_claim_payload(resource: dict[str, Any]) -> dict[str, Any]:
             )
         ),
         "amount": _extract_amount(resource),
-        "status": resource.get("status") or "pending",
+        "status": normalize_claim_status(resource.get("status")),
         "payload": resource,
     }
+
+
+def normalize_claim_status(value: Any) -> str:
+    if not isinstance(value, str) or not value.strip():
+        return "Active"
+
+    normalized = CLAIM_STATUS_ALIASES.get(value.strip().lower())
+    if normalized:
+        return normalized
+
+    return value.strip()
 
 
 def _load_claim_store() -> dict[str, "Claim"]:
@@ -122,6 +160,9 @@ def get_claim(claim_id: str):
 def create_claim(claim: Claim):
     if claim.id in _claim_store:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Claim ID already exists")
+    claim.status = normalize_claim_status(claim.status)
+    if claim.payload is not None:
+        claim.payload["status"] = claim.status
     _claim_store[claim.id] = claim
     return claim
 
@@ -132,8 +173,31 @@ def update_claim(claim_id: str, updated: Claim):
     if not existing:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Claim not found")
     updated.id = claim_id
+    updated.status = normalize_claim_status(updated.status)
+    if updated.payload is not None:
+        updated.payload["status"] = updated.status
     _claim_store[claim_id] = updated
     return updated
+
+
+@router.patch("/{claim_id}/status", response_model=Claim)
+def update_claim_status(claim_id: str, update: ClaimStatusUpdate):
+    claim = _claim_store.get(claim_id)
+    if not claim:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Claim not found")
+
+    normalized_status = normalize_claim_status(update.status)
+    if normalized_status not in CLAIM_STATUS_OPTIONS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid claim status",
+        )
+
+    claim.status = normalized_status
+    if claim.payload is not None:
+        claim.payload["status"] = normalized_status
+    _claim_store[claim_id] = claim
+    return claim
 
 
 @router.delete("/{claim_id}", status_code=status.HTTP_204_NO_CONTENT)

@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, Route, Routes, useParams } from "react-router-dom";
+import ClaimForm from "./components/ClaimForm";
 import ClaimTable from "./components/ClaimTable";
 import PatientSummaryCard from "./components/PatientSummaryCard";
 import PayerRuleAlert from "./components/PayerRuleAlert";
-import { fetchClaims, fetchPatient, optimizeClaims } from "./services";
+import { fetchClaims, fetchPatient, updateClaimStatus, validateClaims } from "./services";
 import {
   Claim,
+  canClaimBeSelectedForValidation,
   PatientSummary,
   ValidationResponse,
   getClaimAmount,
@@ -17,13 +19,14 @@ import {
   getClaimProcedureCount,
   getClaimProcedureLabel,
   getClaimServiceLineCount,
+  getClaimStatusLabel,
   getClaimTypeLabel,
 } from "./types/claim";
 
 interface ClaimInsight {
   claim: Claim;
   score: number;
-  lane: "Touchless Ready" | "Needs Review";
+  lane: "Validation Ready" | "Needs Review";
   findings: string[];
   blockers: string[];
 }
@@ -143,7 +146,7 @@ const buildClaimInsight = (claim: Claim): ClaimInsight => {
   return {
     claim,
     score: Math.max(12, Math.min(100, score)),
-    lane: blockers.length === 0 ? "Touchless Ready" : "Needs Review",
+    lane: blockers.length === 0 ? "Validation Ready" : "Needs Review",
     findings,
     blockers,
   };
@@ -154,7 +157,8 @@ function App() {
   const [selectedClaimIds, setSelectedClaimIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [optimizeResult, setOptimizeResult] = useState<ValidationResponse[] | null>(null);
+  const [validationResult, setValidationResult] = useState<ValidationResponse[] | null>(null);
+  const [statusUpdateClaimId, setStatusUpdateClaimId] = useState<string | null>(null);
 
   useEffect(() => {
     const loadClaims = async () => {
@@ -173,34 +177,84 @@ function App() {
     void loadClaims();
   }, []);
 
+  useEffect(() => {
+    setSelectedClaimIds((current) =>
+      current.filter((claimId) => {
+        const claim = claims.find((item) => item.id === claimId);
+        return claim ? canClaimBeSelectedForValidation(claim) : false;
+      })
+    );
+  }, [claims]);
+
   const insights = useMemo(() => claims.map(buildClaimInsight), [claims]);
 
   const metrics = useMemo(() => {
     const totalClaims = claims.length;
     const totalValue = claims.reduce((sum, claim) => sum + getClaimAmount(claim), 0);
-    const touchlessReady = insights.filter((item) => item.lane === "Touchless Ready").length;
-    const reviewQueue = totalClaims - touchlessReady;
+    const validationReady = insights.filter((item) => item.lane === "Validation Ready").length;
+    const reviewQueue = totalClaims - validationReady;
 
     return {
       totalClaims,
       totalValue,
-      touchlessReady,
+      validationReady,
       reviewQueue,
-      touchlessRate: totalClaims ? Math.round((touchlessReady / totalClaims) * 100) : 0,
+      validationRate: totalClaims ? Math.round((validationReady / totalClaims) * 100) : 0,
     };
   }, [claims, insights]);
 
-  const onOptimizeSelected = async () => {
+  const onValidateSelected = async () => {
     if (!selectedClaimIds.length) {
       return;
     }
 
+    const nonEligibleSelectedClaims = claims.filter(
+      (claim) => selectedClaimIds.includes(claim.id) && !canClaimBeSelectedForValidation(claim)
+    );
+
+    if (nonEligibleSelectedClaims.length) {
+      setError("Validation only runs for claims with Active or Resubmit status.");
+      return;
+    }
+
     setError(null);
+    const claimIdsToValidate = [...selectedClaimIds];
+    const previousClaims = claims;
+
+    setClaims((current) =>
+      current.map((claim) =>
+        claimIdsToValidate.includes(claim.id) ? { ...claim, status: "InProcess" } : claim
+      )
+    );
+
     try {
-      const response = await optimizeClaims({ claimIds: selectedClaimIds });
-      setOptimizeResult(response);
+      const response = await validateClaims({ claimIds: claimIdsToValidate });
+      setValidationResult(response);
+      setClaims((current) =>
+        current.map((claim) => {
+          const result = response.find((item) => item.claimId === claim.id);
+          return result?.claimStatus ? { ...claim, status: result.claimStatus } : claim;
+        })
+      );
+      setSelectedClaimIds([]);
+    } catch (err) {
+      setClaims(previousClaims);
+      setError((err as Error).message);
+    }
+  };
+
+  const onMarkClaimForResubmit = async (claimId: string) => {
+    setError(null);
+    setStatusUpdateClaimId(claimId);
+    try {
+      const updatedClaim = await updateClaimStatus(claimId, "Resubmit");
+      setClaims((current) =>
+        current.map((claim) => (claim.id === updatedClaim.id ? { ...claim, ...updatedClaim } : claim))
+      );
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setStatusUpdateClaimId(null);
     }
   };
 
@@ -229,11 +283,11 @@ function App() {
 
                   <button
                     type="button"
-                    onClick={onOptimizeSelected}
+                    onClick={onValidateSelected}
                     disabled={!selectedClaimIds.length}
                     className="rounded-xl bg-slate-950 px-4 py-3 text-sm font-medium text-white transition hover:bg-cyan-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
                   >
-                    Run touchless optimization ({selectedClaimIds.length})
+                    Run validation ({selectedClaimIds.length})
                   </button>
                 </div>
 
@@ -244,16 +298,17 @@ function App() {
                 ) : (
                   <ClaimTable
                     claims={claims}
+                    insights={insights}
                     selectedClaimIds={selectedClaimIds}
                     onSelectionChange={setSelectedClaimIds}
                   />
                 )}
 
-                {optimizeResult ? (
+                {validationResult ? (
                   <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-4">
-                    <p className="eyebrow text-slate-500">Optimization Response</p>
+                    <p className="eyebrow text-slate-500">Validation Response</p>
                     <div className="mt-3 grid gap-2">
-                      {optimizeResult.map((result) => (
+                      {validationResult.map((result) => (
                         <p
                           key={result.claimId}
                           className="rounded-2xl bg-white px-3 py-2 text-sm text-slate-700"
@@ -269,7 +324,14 @@ function App() {
           />
           <Route
             path="/claims/:id"
-            element={<ClaimDetails claims={claims} insights={insights} />}
+            element={
+              <ClaimDetails
+                claims={claims}
+                insights={insights}
+                onMarkClaimForResubmit={onMarkClaimForResubmit}
+                statusUpdateClaimId={statusUpdateClaimId}
+              />
+            }
           />
         </Routes>
       </div>
@@ -280,9 +342,13 @@ function App() {
 function ClaimDetails({
   claims,
   insights,
+  onMarkClaimForResubmit,
+  statusUpdateClaimId,
 }: {
   claims: Claim[];
   insights: ClaimInsight[];
+  onMarkClaimForResubmit: (claimId: string) => Promise<void>;
+  statusUpdateClaimId: string | null;
 }) {
   const { id } = useParams();
   const [patient, setPatient] = useState<PatientSummary | null>(null);
@@ -376,14 +442,14 @@ function ClaimDetails({
           </div>
 
           <div className="rounded-[22px] border border-cyan-100 bg-cyan-50 px-4 py-3 text-right">
-            <p className="text-xs uppercase tracking-[0.18em] text-cyan-700">Touchless score</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-cyan-700">Risk score</p>
             <p className="mt-2 text-3xl font-semibold text-slate-950">{insight.score}</p>
             <p className="mt-1 text-sm text-slate-600">{insight.lane}</p>
           </div>
         </div>
 
         <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-          <DetailMetric label="Status" value={claim.status ?? "unknown"} />
+          <DetailMetric label="Status" value={getClaimStatusLabel(claim)} />
           <DetailMetric label="Type" value={getClaimTypeLabel(claim)} />
           <DetailMetric label="Priority" value={getClaimPriorityLabel(claim)} />
           <DetailMetric label="Created" value={formatDate(claim.created)} />
@@ -415,6 +481,11 @@ function ClaimDetails({
         </div>
 
         <div className="space-y-4">
+          <ClaimForm
+            claim={claim}
+            onMarkForResubmit={onMarkClaimForResubmit}
+            saving={statusUpdateClaimId === claim.id}
+          />
           {patient ? <PatientSummaryCard patient={patient} /> : null}
         </div>
       </div>

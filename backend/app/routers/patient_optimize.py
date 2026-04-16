@@ -8,9 +8,10 @@ from app.services.validator import validate_claim_data
 from app.services.fraud_detection_based_on_history import detect_fraud      # Sai added
 
 router = APIRouter(prefix="/api", tags=["api"])
+VALIDATION_ELIGIBLE_STATUSES = {"Active", "Resubmit"}
 
 
-class OptimizeRequest(BaseModel):
+class ValidationRequest(BaseModel):
     claimIds: List[str]
 
 
@@ -42,8 +43,8 @@ def get_patient(patient_id: str):
     }
 
 
-@router.post("/optimize")
-def optimize(req: OptimizeRequest) -> List[dict[str, Any]]:
+@router.post("/validate")
+def validate(req: ValidationRequest) -> List[dict[str, Any]]:
     """Run validation rules for each selected claim id; shape matches the frontend `ValidationResponse`."""
     results: List[dict[str, Any]] = []
     for claim_id in req.claimIds:
@@ -58,23 +59,47 @@ def optimize(req: OptimizeRequest) -> List[dict[str, Any]]:
                 }
             )
             continue
+        if claim.status not in VALIDATION_ELIGIBLE_STATUSES:
+            results.append(
+                {
+                    "claimId": claim_id,
+                    "status": "invalid",
+                    "coverageStatus": "not_covered",
+                    "errors": [f"Claim status {claim.status} is not eligible for validation"],
+                    "claimStatus": claim.status,
+                }
+            )
+            continue
+
+        claim.status = "InProcess"
+        if claim.payload is not None:
+            claim.payload["status"] = "InProcess"
+
         vr = validate_claim_data(_claim_to_validation_payload(claim))
         if vr.get("valid"):
+            claim.status = "Submitted"
+            if claim.payload is not None:
+                claim.payload["status"] = "Submitted"
             results.append(
                 {
                     "claimId": claim_id,
                     "status": "valid",
                     "coverageStatus": "covered",
                     "errors": [],
+                    "claimStatus": claim.status,
                 }
             )
         else:
+            claim.status = "Review"
+            if claim.payload is not None:
+                claim.payload["status"] = "Review"
             results.append(
                 {
                     "claimId": claim_id,
                     "status": "invalid",
                     "coverageStatus": "not_covered",
                     "errors": vr.get("errors") or [],
+                    "claimStatus": claim.status,
                 }
             )
     return results

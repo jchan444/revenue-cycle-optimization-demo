@@ -1,10 +1,11 @@
 import axios, { AxiosError } from "axios";
 import {
   Claim,
+  ClaimStatus,
   ValidationResponse,
   BackendClaim,
   PatientSummary,
-  OptimizeRequest,
+  ValidationRequest,
   getClaimAmount,
 } from "../types/claim";
 
@@ -39,6 +40,7 @@ const formatClaimForFrontend = (data: BackendClaim): Claim => {
   return {
     ...claim,
     id: claim.id,
+    status: data.status ?? claim.status,
     payerRuleStatus: data.payer_rule_status,
     payerRuleMessage: data.payer_rule_message,
   };
@@ -105,12 +107,24 @@ export const fetchPatient = async (id: string): Promise<PatientSummary> => {
   }
 };
 
-export const optimizeClaims = async (
-  payload: OptimizeRequest
+export const validateClaims = async (
+  payload: ValidationRequest
 ): Promise<ValidationResponse[]> => {
   try {
-    const response = await API.post("/api/optimize", payload);
+    const response = await API.post("/api/validate", payload);
     return response.data;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const updateClaimStatus = async (
+  claimId: string,
+  status: ClaimStatus
+): Promise<Claim> => {
+  try {
+    const response = await API.patch<BackendClaim>(`/claims/${claimId}/status`, { status });
+    return formatClaimForFrontend(response.data);
   } catch (error) {
     return handleError(error);
   }
