@@ -1,6 +1,6 @@
 from typing import Any, List
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from pydantic import BaseModel
 
 from app.models.claim import Claim, _claim_store
