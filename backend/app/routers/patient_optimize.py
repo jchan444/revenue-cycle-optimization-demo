@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from app.models.claim import Claim, _claim_store
 from app.services.validator import validate_claim_data
 from app.services.fraud_detection_based_on_history import detect_fraud      # Sai added
+from app.services.predictive_fraud_detection import detect_predictive_fraud
 
 router = APIRouter(prefix="/api", tags=["api"])
 VALIDATION_ELIGIBLE_STATUSES = {"Active", "Resubmit"}
@@ -130,3 +131,20 @@ def detect_fraud_endpoint(req: FraudDetectRequest) -> FraudDetectResponse:
     )
     return FraudDetectResponse(**detected_results)  # ** unpacks output variables
 # Sai code ends
+
+class PredictiveFraudRequest(BaseModel):
+    claim: Claim
+
+
+class PredictiveFraudResponse(BaseModel):
+    fraud_risk: str
+    risk_score: int
+    warnings: list[str]
+
+#predict fraud detection endpoint
+@router.post("/fraud/predict", response_model=PredictiveFraudResponse)
+def predictive_fraud_endpoint(req: PredictiveFraudRequest):
+
+    result = detect_predictive_fraud(req.claim.model_dump())
+
+    return PredictiveFraudResponse(**result)
