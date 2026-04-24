@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import claims, patient_optimize
+from app.routers import patient_optimize
 from app.models import claim as claim_model
 
 app = FastAPI(
@@ -16,7 +16,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(claims.router)
 app.include_router(claim_model.router)
 app.include_router(patient_optimize.router)
 
