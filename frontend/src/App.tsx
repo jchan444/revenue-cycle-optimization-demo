@@ -18,6 +18,7 @@ import {
 import {
   Claim,
   ClaimDraftValues,
+  FraudDetectionResponse,
   FraudPrediction,
   PatientSummary,
   ValidationResponse,
@@ -170,6 +171,9 @@ const buildClaimInsight = (claim: Claim): ClaimInsight => {
 function App() {
   const [claims, setClaims] = useState<Claim[]>([]);
   const [fraudPredictions, setFraudPredictions] = useState<Record<string, FraudPrediction | undefined>>({});
+  const [fraudDetections, setFraudDetections] = useState<
+    Record<string, FraudDetectionResponse | undefined>
+  >({});
   const [loadingFraudPredictionIds, setLoadingFraudPredictionIds] = useState<string[]>([]);
   const [selectedClaimIds, setSelectedClaimIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -337,6 +341,16 @@ function App() {
       setClaims((current) =>
         current.map((claim) => (claim.id === updatedClaim.id ? { ...claim, ...updatedClaim } : claim))
       );
+      setFraudPredictions((current) => {
+        const next = { ...current };
+        delete next[claimId];
+        return next;
+      });
+      setFraudDetections((current) => {
+        const next = { ...current };
+        delete next[claimId];
+        return next;
+      });
     } catch (err) {
       setDetailError((err as Error).message);
       throw err;
@@ -381,6 +395,11 @@ function App() {
         delete next[claimId];
         return next;
       });
+      setFraudDetections((current) => {
+        const next = { ...current };
+        delete next[claimId];
+        return next;
+      });
       setValidationResult((current) => current?.filter((item) => item.claimId !== claimId) ?? null);
     } catch (err) {
       setError((err as Error).message);
@@ -389,7 +408,7 @@ function App() {
     }
   };
 
-  const onFetchFraudPrediction = async (claimId: string) => {
+  const onFetchFraudInsights = async (claimId: string) => {
     const claim = claims.find((item) => item.id === claimId);
     if (!claim || loadingFraudPredictionIds.includes(claimId)) {
       return;
@@ -399,8 +418,9 @@ function App() {
     setLoadingFraudPredictionIds((current) => [...current, claimId]);
 
     try {
-      const prediction = await predictFraud(claim);
+      const [prediction, detection] = await Promise.all([predictFraud(claim), detectFraud(claim)]);
       setFraudPredictions((current) => ({ ...current, [claimId]: prediction }));
+      setFraudDetections((current) => ({ ...current, [claimId]: detection }));
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -428,7 +448,7 @@ function App() {
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                   <div>
                     <p className="eyebrow text-slate-500">Claims Queue</p>
-                    <h2 className="text-2xl font-semibold text-slate-950">Operational row view</h2>
+                    <h2 className="text-2xl font-semibold text-slate-950">Revenue Cycle Optimization</h2>
                     <p className="mt-2 text-sm text-slate-600">
                       {metrics.totalClaims} claims | {currencyFormatter.format(metrics.totalValue)} total |{" "}
                       {metrics.validationReady} validation ready
@@ -460,12 +480,11 @@ function App() {
                 ) : (
                   <ClaimTable
                     claims={claims}
-                    insights={insights}
                     fraudPredictions={fraudPredictions}
                     loadingFraudPredictionIds={loadingFraudPredictionIds}
                     selectedClaimIds={selectedClaimIds}
                     onSelectionChange={setSelectedClaimIds}
-                    onFetchFraudPrediction={onFetchFraudPrediction}
+                    onFetchFraudInsights={onFetchFraudInsights}
                     onDeleteClaim={onDeleteClaim}
                     deletingClaimId={deletingClaimId}
                   />
@@ -505,11 +524,15 @@ function App() {
               <ClaimDetails
                 claims={claims}
                 insights={insights}
+                fraudPredictions={fraudPredictions}
+                fraudDetections={fraudDetections}
+                loadingFraudPredictionIds={loadingFraudPredictionIds}
                 savingClaimId={savingClaimId}
                 detailError={detailError}
                 onSaveClaim={onSaveClaim}
                 onMarkClaimForResubmit={onMarkClaimForResubmit}
                 statusUpdateClaimId={statusUpdateClaimId}
+                onFetchFraudInsights={onFetchFraudInsights}
               />
             }
           />
@@ -543,9 +566,6 @@ function CreateClaimPage({
         </Link>
         <div className="mt-4 max-w-3xl">
           <h2 className="text-2xl font-semibold text-slate-950">Create a new claim</h2>
-          <p className="mt-2 text-sm text-slate-600">
-            This page posts to `POST /claims/` and validates the required fields before submission.
-          </p>
         </div>
       </div>
 
@@ -559,19 +579,27 @@ function CreateClaimPage({
 function ClaimDetails({
   claims,
   insights,
+  fraudPredictions,
+  fraudDetections,
+  loadingFraudPredictionIds,
   savingClaimId,
   detailError,
   onSaveClaim,
   onMarkClaimForResubmit,
   statusUpdateClaimId,
+  onFetchFraudInsights,
 }: {
   claims: Claim[];
   insights: ClaimInsight[];
+  fraudPredictions: Record<string, FraudPrediction | undefined>;
+  fraudDetections: Record<string, FraudDetectionResponse | undefined>;
+  loadingFraudPredictionIds: string[];
   savingClaimId: string | null;
   detailError: string | null;
   onSaveClaim: (claimId: string, values: ClaimDraftValues) => Promise<void>;
   onMarkClaimForResubmit: (claimId: string) => Promise<void>;
   statusUpdateClaimId: string | null;
+  onFetchFraudInsights: (claimId: string) => Promise<void>;
 }) {
   const { id } = useParams();
   const [patient, setPatient] = useState<PatientSummary | null>(null);
@@ -602,6 +630,18 @@ function ClaimDetails({
 
     void loadPatient();
   }, [claim]);
+
+  useEffect(() => {
+    if (!claim) {
+      return;
+    }
+
+    if (fraudPredictions[claim.id] && fraudDetections[claim.id]) {
+      return;
+    }
+
+    void onFetchFraudInsights(claim.id);
+  }, [claim, fraudDetections, fraudPredictions, onFetchFraudInsights]);
 
   if (!claim || !insight) {
     return (
@@ -651,6 +691,11 @@ function ClaimDetails({
     await onSaveClaim(claim.id, values);
   };
 
+  const fraudPrediction = fraudPredictions[claim.id];
+  const fraudDetection = fraudDetections[claim.id];
+  const fraudInsightsLoading = loadingFraudPredictionIds.includes(claim.id);
+  const fraudWarnings = fraudPrediction?.warnings ?? [];
+
   return (
     <section className="mt-6 space-y-4">
       <div className="rounded-[28px] border border-white/70 bg-white/85 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
@@ -668,11 +713,18 @@ function ClaimDetails({
             </div>
           </div>
 
-          <div className="rounded-[22px] border border-cyan-100 bg-cyan-50 px-4 py-3 text-right">
-            <p className="text-xs uppercase tracking-[0.18em] text-cyan-700">Risk score</p>
-            <p className="mt-2 text-3xl font-semibold text-slate-950">{insight.score}</p>
-            <p className="mt-1 text-sm text-slate-600">{insight.lane}</p>
-          </div>
+          {fraudPrediction ? (
+            <div className="rounded-[22px] border border-cyan-100 bg-cyan-50 px-4 py-3 text-right">
+              <p className="text-xs uppercase tracking-[0.18em] text-cyan-700">Risk score</p>
+              <p className="mt-2 text-3xl font-semibold text-slate-950">{fraudPrediction.risk_score}</p>
+              <p className="mt-1 text-sm text-slate-600">{fraudPrediction.fraud_risk} fraud risk</p>
+            </div>
+          ) : fraudInsightsLoading ? (
+            <div className="rounded-[22px] border border-cyan-100 bg-cyan-50 px-4 py-3 text-right">
+              <p className="text-xs uppercase tracking-[0.18em] text-cyan-700">Fraud review</p>
+              <p className="mt-2 text-sm font-medium text-slate-700">Loading latest prediction and denial checks...</p>
+            </div>
+          ) : null}
         </div>
 
         <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
@@ -687,6 +739,18 @@ function ClaimDetails({
             label="Claim amount"
             value={currencyFormatter.format(getClaimAmount(claim))}
           />
+          {fraudPrediction ? (
+            <DetailMetric label="Predictive warnings" value={String(fraudWarnings.length)} />
+          ) : null}
+          {fraudDetection ? (
+            <DetailMetric label="Denial risk" value={fraudDetection.denial_risk} />
+          ) : null}
+          {fraudDetection ? (
+            <DetailMetric
+              label="Denial rate"
+              value={`${Math.round(fraudDetection.denial_rate * 100)}%`}
+            />
+          ) : null}
         </div>
 
         <div className="mt-5">
@@ -699,6 +763,7 @@ function ClaimDetails({
 
       <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-4">
+          {fraudPrediction ? <DetailList title="Predictive Warnings" items={fraudWarnings} /> : null}
           <DetailList title="Audit Findings" items={insight.findings} />
           <DetailList title="Human Review Triggers" items={insight.blockers} />
           <DetailList title="Diagnosis Mapping" items={diagnosisList} />

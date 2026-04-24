@@ -10,21 +10,13 @@ import {
   getClaimStatusLabel,
 } from "../types/claim";
 
-interface ClaimInsightSummary {
-  claim: Claim;
-  score: number;
-  findings: string[];
-  blockers: string[];
-}
-
 interface ClaimTableProps {
   claims: Claim[];
-  insights: ClaimInsightSummary[];
   fraudPredictions: Record<string, FraudPrediction | undefined>;
   loadingFraudPredictionIds: string[];
   selectedClaimIds: string[];
   onSelectionChange: (claimIds: string[]) => void;
-  onFetchFraudPrediction: (claimId: string) => Promise<void>;
+  onFetchFraudInsights: (claimId: string) => Promise<void>;
   onDeleteClaim: (claimId: string) => Promise<void>;
   deletingClaimId: string | null;
 }
@@ -57,12 +49,11 @@ const buildPaginationItems = (currentPage: number, totalPages: number): Array<nu
 
 function ClaimTable({
   claims,
-  insights,
   fraudPredictions,
   loadingFraudPredictionIds,
   selectedClaimIds,
   onSelectionChange,
-  onFetchFraudPrediction,
+  onFetchFraudInsights,
   onDeleteClaim,
   deletingClaimId,
 }: ClaimTableProps) {
@@ -73,19 +64,6 @@ function ClaimTable({
   const [currentPage, setCurrentPage] = useState(1);
   const [openMenuClaimId, setOpenMenuClaimId] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const insightMap = useMemo(
-    () =>
-      new Map(
-        insights.map((insight) => [
-          insight.claim.id,
-          {
-            warnings: insight.findings.length,
-            riskScore: insight.score,
-          },
-        ])
-      ),
-    [insights]
-  );
 
   const filteredClaims = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -108,12 +86,12 @@ function ClaimTable({
       if (sortBy === "warnings" || sortBy === "riskScore") {
         const left =
           sortBy === "warnings"
-            ? fraudPredictions[a.id]?.warnings.length ?? insightMap.get(a.id)?.warnings ?? 0
-            : fraudPredictions[a.id]?.risk_score ?? insightMap.get(a.id)?.riskScore ?? 0;
+            ? fraudPredictions[a.id]?.warnings.length ?? 0
+            : fraudPredictions[a.id]?.risk_score ?? 0;
         const right =
           sortBy === "warnings"
-            ? fraudPredictions[b.id]?.warnings.length ?? insightMap.get(b.id)?.warnings ?? 0
-            : fraudPredictions[b.id]?.risk_score ?? insightMap.get(b.id)?.riskScore ?? 0;
+            ? fraudPredictions[b.id]?.warnings.length ?? 0
+            : fraudPredictions[b.id]?.risk_score ?? 0;
         return (left - right) * direction;
       }
       if (sortBy === "fraudRisk") {
@@ -143,7 +121,7 @@ function ClaimTable({
 
       return left.localeCompare(right) * direction;
     });
-  }, [claims, fraudPredictions, insightMap, search, sortBy, sortDirection]);
+  }, [claims, fraudPredictions, search, sortBy, sortDirection]);
 
   const totalPages = Math.max(1, Math.ceil(filteredClaims.length / PAGE_SIZE));
   const currentPageSafe = Math.min(currentPage, totalPages);
@@ -280,12 +258,11 @@ function ClaimTable({
           <tbody>
             {paginatedClaims.map((claim) => {
               const canSelect = canClaimBeSelectedForValidation(claim);
-              const insight = insightMap.get(claim.id) ?? { warnings: 0, riskScore: 0 };
               const fraudPrediction = fraudPredictions[claim.id];
               const fraudPredictionLoading = loadingFraudPredictionIds.includes(claim.id);
               const warningText = fraudPrediction?.warnings.length
                 ? fraudPrediction.warnings.join(" | ")
-                : "No predictive warnings";
+                : "";
               return (
                 <tr
                   key={claim.id}
@@ -334,7 +311,7 @@ function ClaimTable({
                     ) : (
                       <button
                         type="button"
-                        onClick={() => void onFetchFraudPrediction(claim.id)}
+                        onClick={() => void onFetchFraudInsights(claim.id)}
                         disabled={fraudPredictionLoading}
                         className="rounded-lg border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-700 transition hover:border-cyan-400 hover:text-cyan-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400"
                       >
@@ -343,11 +320,11 @@ function ClaimTable({
                     )}
                   </td>
                   <td className="px-2 py-4 align-top font-medium">
-                    {fraudPrediction?.risk_score ?? insight.riskScore}
+                    {fraudPrediction?.risk_score ?? ""}
                   </td>
                   <td className="px-3 py-4 align-top">
                     <span className="block break-words" style={THREE_LINE_CLAMP_STYLE} title={warningText}>
-                      {fraudPrediction?.warnings.length ? warningText : "None"}
+                      {warningText}
                     </span>
                   </td>
                   <td className="px-2 py-4 align-top">

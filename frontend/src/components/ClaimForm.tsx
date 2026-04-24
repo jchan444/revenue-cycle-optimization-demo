@@ -82,8 +82,8 @@ function ClaimForm({
           </p>
           <p className="mt-1 text-sm text-slate-600">
             {mode === "create"
-              ? "Add a new claim to the queue with the fields expected by the backend."
-              : "Update the claim body used by PUT /claims/{claim_id}."}
+              ? "Add a new claim."
+              : "Update the claim."}
           </p>
         </div>
 
