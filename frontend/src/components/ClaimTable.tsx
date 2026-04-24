@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Claim,
+  FraudPrediction,
   canClaimBeSelectedForValidation,
   getClaimPatientLabel,
   getClaimPayerLabel,
@@ -19,13 +20,24 @@ interface ClaimInsightSummary {
 interface ClaimTableProps {
   claims: Claim[];
   insights: ClaimInsightSummary[];
+  fraudPredictions: Record<string, FraudPrediction | undefined>;
+  loadingFraudPredictionIds: string[];
   selectedClaimIds: string[];
   onSelectionChange: (claimIds: string[]) => void;
+  onFetchFraudPrediction: (claimId: string) => Promise<void>;
+  onDeleteClaim: (claimId: string) => Promise<void>;
+  deletingClaimId: string | null;
 }
 
-type SortKey = "id" | "patient" | "procedure" | "status" | "errors" | "warnings" | "riskScore";
+type SortKey = "id" | "patient" | "procedure" | "status" | "fraudRisk" | "warnings" | "riskScore";
 
 const PAGE_SIZE = 20;
+const THREE_LINE_CLAMP_STYLE = {
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical" as const,
+  WebkitLineClamp: 3,
+  overflow: "hidden",
+};
 
 const buildPaginationItems = (currentPage: number, totalPages: number): Array<number | "ellipsis"> => {
   if (totalPages <= 7) {
@@ -46,21 +58,27 @@ const buildPaginationItems = (currentPage: number, totalPages: number): Array<nu
 function ClaimTable({
   claims,
   insights,
+  fraudPredictions,
+  loadingFraudPredictionIds,
   selectedClaimIds,
   onSelectionChange,
+  onFetchFraudPrediction,
+  onDeleteClaim,
+  deletingClaimId,
 }: ClaimTableProps) {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<SortKey>("id");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(1);
+  const [openMenuClaimId, setOpenMenuClaimId] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
   const insightMap = useMemo(
     () =>
       new Map(
         insights.map((insight) => [
           insight.claim.id,
           {
-            errors: insight.blockers.length,
             warnings: insight.findings.length,
             riskScore: insight.score,
           },
@@ -87,10 +105,23 @@ function ClaimTable({
 
     return [...base].sort((a, b) => {
       const direction = sortDirection === "asc" ? 1 : -1;
-      if (sortBy === "errors" || sortBy === "warnings" || sortBy === "riskScore") {
-        const left = insightMap.get(a.id)?.[sortBy] ?? 0;
-        const right = insightMap.get(b.id)?.[sortBy] ?? 0;
+      if (sortBy === "warnings" || sortBy === "riskScore") {
+        const left =
+          sortBy === "warnings"
+            ? fraudPredictions[a.id]?.warnings.length ?? insightMap.get(a.id)?.warnings ?? 0
+            : fraudPredictions[a.id]?.risk_score ?? insightMap.get(a.id)?.riskScore ?? 0;
+        const right =
+          sortBy === "warnings"
+            ? fraudPredictions[b.id]?.warnings.length ?? insightMap.get(b.id)?.warnings ?? 0
+            : fraudPredictions[b.id]?.risk_score ?? insightMap.get(b.id)?.riskScore ?? 0;
         return (left - right) * direction;
+      }
+      if (sortBy === "fraudRisk") {
+        return (
+          (getFraudRiskRank(fraudPredictions[a.id]?.fraud_risk) -
+            getFraudRiskRank(fraudPredictions[b.id]?.fraud_risk)) *
+          direction
+        );
       }
 
       const left =
@@ -112,7 +143,7 @@ function ClaimTable({
 
       return left.localeCompare(right) * direction;
     });
-  }, [claims, insightMap, search, sortBy, sortDirection]);
+  }, [claims, fraudPredictions, insightMap, search, sortBy, sortDirection]);
 
   const totalPages = Math.max(1, Math.ceil(filteredClaims.length / PAGE_SIZE));
   const currentPageSafe = Math.min(currentPage, totalPages);
@@ -134,6 +165,32 @@ function ClaimTable({
       setCurrentPage(totalPages);
     }
   }, [currentPage, totalPages]);
+
+  React.useEffect(() => {
+    if (!openMenuClaimId) {
+      return;
+    }
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenuClaimId(null);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpenMenuClaimId(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [openMenuClaimId]);
 
   const toggleSort = (key: SortKey) => {
     if (sortBy === key) {
@@ -184,17 +241,17 @@ function ClaimTable({
             <col style={{ width: "52px" }} />
             <col style={{ width: "16%" }} />
             <col style={{ width: "15%" }} />
-            <col style={{ width: "24%" }} />
+            <col style={{ width: "20%" }} />
             <col style={{ width: "10%" }} />
-            <col style={{ width: "8%" }} />
-            <col style={{ width: "9%" }} />
-            <col style={{ width: "8%" }} />
             <col style={{ width: "10%" }} />
+            <col style={{ width: "7%" }} />
+            <col style={{ width: "13%" }} />
+            <col style={{ width: "8%" }} />
           </colgroup>
           <thead>
             <tr className="border-b border-slate-200 text-left text-slate-900">
               <th className="px-4 py-4 font-semibold">Select</th>
-              {(["id", "patient", "procedure", "status", "errors", "warnings", "riskScore"] as SortKey[]).map((key) => (
+              {(["id", "patient", "procedure", "status", "fraudRisk", "riskScore", "warnings"] as SortKey[]).map((key) => (
                 <th key={key} className="px-4 py-4 font-semibold">
                   <button
                     type="button"
@@ -207,9 +264,11 @@ function ClaimTable({
                           ? "ID"
                           : key === "status"
                             ? "Status"
+                            : key === "fraudRisk"
+                              ? "Fraud risk"
                             : key === "riskScore"
                               ? "Risk score"
-                              : key.charAt(0).toUpperCase() + key.slice(1);
+                            : key.charAt(0).toUpperCase() + key.slice(1);
                       return `${label}${isSortActive(key) ? ` (${sortDirection})` : ""}`;
                     })()}
                   </button>
@@ -221,7 +280,12 @@ function ClaimTable({
           <tbody>
             {paginatedClaims.map((claim) => {
               const canSelect = canClaimBeSelectedForValidation(claim);
-              const insight = insightMap.get(claim.id) ?? { errors: 0, warnings: 0, riskScore: 0 };
+              const insight = insightMap.get(claim.id) ?? { warnings: 0, riskScore: 0 };
+              const fraudPrediction = fraudPredictions[claim.id];
+              const fraudPredictionLoading = loadingFraudPredictionIds.includes(claim.id);
+              const warningText = fraudPrediction?.warnings.length
+                ? fraudPrediction.warnings.join(" | ")
+                : "No predictive warnings";
               return (
                 <tr
                   key={claim.id}
@@ -240,24 +304,18 @@ function ClaimTable({
                       }
                     />
                   </td>
-                  <td className="px-3 py-4 align-middle font-medium">
-                    <span className="block overflow-hidden text-ellipsis whitespace-nowrap" title={claim.id}>
+                  <td className="px-3 py-4 align-top font-medium">
+                    <span className="block break-words" style={THREE_LINE_CLAMP_STYLE} title={claim.id}>
                       {claim.id}
                     </span>
                   </td>
-                  <td className="px-3 py-4 align-middle">
-                    <span
-                      className="block overflow-hidden text-ellipsis whitespace-nowrap"
-                      title={getClaimPatientLabel(claim)}
-                    >
+                  <td className="px-3 py-4 align-top">
+                    <span className="block break-words" style={THREE_LINE_CLAMP_STYLE} title={getClaimPatientLabel(claim)}>
                       {getClaimPatientLabel(claim)}
                     </span>
                   </td>
-                  <td className="px-3 py-4 align-middle">
-                    <span
-                      className="block overflow-hidden text-ellipsis whitespace-nowrap"
-                      title={getClaimProcedureLabel(claim)}
-                    >
+                  <td className="px-3 py-4 align-top">
+                    <span className="block break-words" style={THREE_LINE_CLAMP_STYLE} title={getClaimProcedureLabel(claim)}>
                       {getClaimProcedureLabel(claim)}
                     </span>
                   </td>
@@ -267,22 +325,82 @@ function ClaimTable({
                     </span>
                   </td>
                   <td className="px-2 py-4 align-middle font-medium whitespace-nowrap">
-                    {insight.errors}
+                    {fraudPrediction ? (
+                      <span
+                        className={`inline-flex rounded-md px-2 py-1 text-xs font-semibold ${getFraudRiskBadgeClass(fraudPrediction.fraud_risk)}`}
+                      >
+                        {fraudPrediction.fraud_risk}
+                      </span>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => void onFetchFraudPrediction(claim.id)}
+                        disabled={fraudPredictionLoading}
+                        className="rounded-lg border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-700 transition hover:border-cyan-400 hover:text-cyan-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400"
+                      >
+                        {fraudPredictionLoading ? "Loading..." : "Fetch"}
+                      </button>
+                    )}
                   </td>
-                  <td className="px-2 py-4 align-middle font-medium whitespace-nowrap">
-                    {insight.warnings}
+                  <td className="px-2 py-4 align-top font-medium">
+                    {fraudPrediction?.risk_score ?? insight.riskScore}
                   </td>
-                  <td className="px-2 py-4 align-middle font-medium whitespace-nowrap">
-                    {insight.riskScore}
+                  <td className="px-3 py-4 align-top">
+                    <span className="block break-words" style={THREE_LINE_CLAMP_STYLE} title={warningText}>
+                      {fraudPrediction?.warnings.length ? warningText : "None"}
+                    </span>
                   </td>
-                  <td className="px-3 py-4 align-middle whitespace-nowrap">
-                    <button
-                      type="button"
-                      onClick={() => navigate(`/claims/${claim.id}`)}
-                      className="w-full rounded-xl bg-blue-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-blue-800"
-                    >
-                      View
-                    </button>
+                  <td className="px-2 py-4 align-top">
+                    <div className="relative flex justify-end" ref={openMenuClaimId === claim.id ? menuRef : null}>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setOpenMenuClaimId((current) => (current === claim.id ? null : claim.id))
+                        }
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-400 hover:text-cyan-700"
+                        aria-haspopup="menu"
+                        aria-expanded={openMenuClaimId === claim.id}
+                        aria-label={`Open actions for claim ${claim.id}`}
+                      >
+                        <span className="flex flex-col items-center justify-center gap-1" aria-hidden="true">
+                          <span className="h-1 w-1 rounded-full bg-current" />
+                          <span className="h-1 w-1 rounded-full bg-current" />
+                          <span className="h-1 w-1 rounded-full bg-current" />
+                        </span>
+                      </button>
+
+                      {openMenuClaimId === claim.id ? (
+                        <div
+                          role="menu"
+                          aria-label={`Actions for claim ${claim.id}`}
+                          className="absolute right-0 top-12 z-10 min-w-[140px] rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_16px_40px_rgba(15,23,42,0.14)]"
+                        >
+                          <button
+                            type="button"
+                            role="menuitem"
+                            onClick={() => {
+                              setOpenMenuClaimId(null);
+                              navigate(`/claims/${claim.id}`);
+                            }}
+                            className="flex w-full rounded-xl px-3 py-2 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-cyan-700"
+                          >
+                            View
+                          </button>
+                          <button
+                            type="button"
+                            role="menuitem"
+                            onClick={() => {
+                              setOpenMenuClaimId(null);
+                              void onDeleteClaim(claim.id);
+                            }}
+                            disabled={deletingClaimId === claim.id}
+                            className="flex w-full rounded-xl px-3 py-2 text-left text-sm font-medium text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:text-slate-400"
+                          >
+                            {deletingClaimId === claim.id ? "Deleting..." : "Delete"}
+                          </button>
+                        </div>
+                      ) : null}
+                    </div>
                   </td>
                 </tr>
               );
@@ -344,5 +462,31 @@ function ClaimTable({
     </section>
   );
 }
+
+const getFraudRiskRank = (value?: string): number => {
+  if (value === "High") {
+    return 3;
+  }
+  if (value === "Average") {
+    return 2;
+  }
+  if (value === "Low") {
+    return 1;
+  }
+  return 0;
+};
+
+const getFraudRiskBadgeClass = (value?: string): string => {
+  if (value === "High") {
+    return "bg-rose-100 text-rose-800";
+  }
+  if (value === "Average") {
+    return "bg-amber-100 text-amber-800";
+  }
+  if (value === "Low") {
+    return "bg-emerald-100 text-emerald-800";
+  }
+  return "bg-slate-200 text-slate-700";
+};
 
 export default ClaimTable;
