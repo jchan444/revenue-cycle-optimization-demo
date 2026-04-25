@@ -6,7 +6,14 @@ import {
   BackendClaim,
   PatientSummary,
   ValidationRequest,
+  FraudDetectionResponse,
+  FraudPrediction,
   getClaimAmount,
+  getClaimDiagnosisCode,
+  getClaimInsuranceId,
+  getClaimPatientId,
+  getClaimProcedureCode,
+  getClaimProviderId,
 } from "../types/claim";
 
 const API = axios.create({
@@ -17,6 +24,7 @@ const API = axios.create({
 const handleError = (error: unknown): never => {
   if (axios.isAxiosError(error)) {
     const axiosError = error as AxiosError<any>;
+    const requestPath = axiosError.config?.url ?? "unknown endpoint";
 
     if (axiosError.response) {
       throw new Error(
@@ -24,8 +32,12 @@ const handleError = (error: unknown): never => {
       );
     }
 
+    if (axiosError.code === "ECONNABORTED") {
+      throw new Error(`Backend request timed out after 5 seconds (${requestPath})`);
+    }
+
     if (axiosError.request) {
-      throw new Error("No response from backend server");
+      throw new Error(`No response from backend server (${requestPath}). Verify the API is running on http://localhost:8000.`);
     }
 
     throw new Error("Possible frontend Request setup error");
@@ -49,17 +61,14 @@ const formatClaimForFrontend = (data: BackendClaim): Claim => {
 const formatClaimForBackend = (claim: Claim) => {
   return {
     id: claim.id,
-    patient_id:
-      claim.patient?.reference?.split("/").pop() ?? claim.patient?.display ?? "",
-    procedure_code:
-      claim.item?.[0]?.productOrService?.coding?.[0]?.code ??
-      claim.item?.[0]?.productOrService?.text ??
-      "",
-    insurance_id:
-      claim.insurance?.[0]?.coverage?.reference?.split("/").pop() ??
-      claim.insurance?.[0]?.coverage?.display ??
-      "",
+    patient_id: getClaimPatientId(claim) || claim.patient?.display || "",
+    provider_id: getClaimProviderId(claim),
+    procedure_code: getClaimProcedureCode(claim),
+    insurance_id: getClaimInsuranceId(claim),
+    diagnosis_code: getClaimDiagnosisCode(claim) || undefined,
     amount: getClaimAmount(claim),
+    status: claim.status,
+    payload: claim,
   };
 };
 
@@ -67,6 +76,15 @@ export const fetchClaims = async (): Promise<Claim[]> => {
   try {
     const response = await API.get<BackendClaim[]>("/claims");
     return response.data.map((data) => formatClaimForFrontend(data));
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const createClaim = async (claim: Claim): Promise<Claim> => {
+  try {
+    const response = await API.post<BackendClaim>("/claims", formatClaimForBackend(claim));
+    return formatClaimForFrontend(response.data);
   } catch (error) {
     return handleError(error);
   }
@@ -107,6 +125,27 @@ export const fetchPatient = async (id: string): Promise<PatientSummary> => {
   }
 };
 
+export const predictFraud = async (claim: Claim): Promise<FraudPrediction> => {
+  try {
+    const response = await API.post<FraudPrediction>("/api/fraud/predict", { claim: formatClaimForBackend(claim) });
+    return response.data;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const detectFraud = async (claim: Claim): Promise<FraudDetectionResponse> => {
+  try {
+    const response = await API.post<FraudDetectionResponse>("/api/fraud/detect", {
+      provider_id: getClaimProviderId(claim) || undefined,
+      procedure_code: getClaimProcedureCode(claim) || undefined,
+    });
+    return response.data;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
 export const validateClaims = async (
   payload: ValidationRequest
 ): Promise<ValidationResponse[]> => {
@@ -125,6 +164,23 @@ export const updateClaimStatus = async (
   try {
     const response = await API.patch<BackendClaim>(`/claims/${claimId}/status`, { status });
     return formatClaimForFrontend(response.data);
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const updateClaim = async (claimId: string, claim: Claim): Promise<Claim> => {
+  try {
+    const response = await API.put<BackendClaim>(`/claims/${claimId}`, formatClaimForBackend(claim));
+    return formatClaimForFrontend(response.data);
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const deleteClaim = async (claimId: string): Promise<void> => {
+  try {
+    await API.delete(`/claims/${claimId}`);
   } catch (error) {
     return handleError(error);
   }
