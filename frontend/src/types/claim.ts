@@ -88,6 +88,8 @@ export interface ValidationResponse {
   coverageStatus: "covered" | "not_covered";
   errors: string[];
   claimStatus?: ClaimStatus;
+  fraudPrediction?: FraudPrediction;
+  fraudDetection?: FraudDetectionResponse;
 }
 
 export interface BackendClaim extends Claim {
@@ -231,6 +233,9 @@ export const canClaimBeSelectedForValidation = (claim: Claim): boolean => {
   const status = getClaimStatusLabel(claim);
   return status === "Active" || status === "Resubmit";
 };
+
+export const canDeleteClaim = (claim: Claim): boolean =>
+  getClaimStatusLabel(claim) === "Active";
 
 export const getClaimDateLabel = (claim: Claim): string => {
   const rawDate = claim.created || claim.billablePeriod?.start || claim.billablePeriod?.end;

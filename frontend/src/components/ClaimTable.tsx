@@ -2,7 +2,9 @@ import React, { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Claim,
+  FraudDetectionResponse,
   FraudPrediction,
+  canDeleteClaim,
   canClaimBeSelectedForValidation,
   getClaimPatientLabel,
   getClaimPayerLabel,
@@ -13,10 +15,10 @@ import {
 interface ClaimTableProps {
   claims: Claim[];
   fraudPredictions: Record<string, FraudPrediction | undefined>;
+  fraudDetections: Record<string, FraudDetectionResponse | undefined>;
   loadingFraudPredictionIds: string[];
   selectedClaimIds: string[];
   onSelectionChange: (claimIds: string[]) => void;
-  onFetchFraudInsights: (claimId: string) => Promise<void>;
   onDeleteClaim: (claimId: string) => Promise<void>;
   deletingClaimId: string | null;
 }
@@ -50,10 +52,10 @@ const buildPaginationItems = (currentPage: number, totalPages: number): Array<nu
 function ClaimTable({
   claims,
   fraudPredictions,
+  fraudDetections,
   loadingFraudPredictionIds,
   selectedClaimIds,
   onSelectionChange,
-  onFetchFraudInsights,
   onDeleteClaim,
   deletingClaimId,
 }: ClaimTableProps) {
@@ -217,13 +219,14 @@ function ClaimTable({
         <table className="w-full table-fixed border-collapse text-sm">
           <colgroup>
             <col style={{ width: "52px" }} />
-            <col style={{ width: "16%" }} />
             <col style={{ width: "15%" }} />
-            <col style={{ width: "20%" }} />
+            <col style={{ width: "14%" }} />
+            <col style={{ width: "18%" }} />
             <col style={{ width: "10%" }} />
-            <col style={{ width: "10%" }} />
+            <col style={{ width: "9%" }} />
+            <col style={{ width: "9%" }} />
             <col style={{ width: "7%" }} />
-            <col style={{ width: "13%" }} />
+            <col style={{ width: "10%" }} />
             <col style={{ width: "8%" }} />
           </colgroup>
           <thead>
@@ -252,13 +255,16 @@ function ClaimTable({
                   </button>
                 </th>
               ))}
+              <th className="px-4 py-4 font-semibold">Denial risk</th>
               <th className="px-4 py-4 font-semibold whitespace-nowrap">Actions</th>
             </tr>
           </thead>
           <tbody>
             {paginatedClaims.map((claim) => {
               const canSelect = canClaimBeSelectedForValidation(claim);
+              const canDelete = canDeleteClaim(claim);
               const fraudPrediction = fraudPredictions[claim.id];
+              const fraudDetection = fraudDetections[claim.id];
               const fraudPredictionLoading = loadingFraudPredictionIds.includes(claim.id);
               const warningText = fraudPrediction?.warnings.length
                 ? fraudPrediction.warnings.join(" | ")
@@ -308,15 +314,10 @@ function ClaimTable({
                       >
                         {fraudPrediction.fraud_risk}
                       </span>
+                    ) : fraudPredictionLoading ? (
+                      <span className="text-xs text-slate-500">Loading...</span>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={() => void onFetchFraudInsights(claim.id)}
-                        disabled={fraudPredictionLoading}
-                        className="rounded-lg border border-slate-200 px-2 py-1 text-xs font-semibold text-slate-700 transition hover:border-cyan-400 hover:text-cyan-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400"
-                      >
-                        {fraudPredictionLoading ? "Loading..." : "Fetch"}
-                      </button>
+                      <span className="text-xs text-slate-400">Pending validation</span>
                     )}
                   </td>
                   <td className="px-2 py-4 align-top font-medium">
@@ -326,6 +327,17 @@ function ClaimTable({
                     <span className="block break-words" style={THREE_LINE_CLAMP_STYLE} title={warningText}>
                       {warningText}
                     </span>
+                  </td>
+                  <td className="px-2 py-4 align-middle font-medium whitespace-nowrap">
+                    {fraudDetection ? (
+                      <span
+                        className={`inline-flex rounded-md px-2 py-1 text-xs font-semibold ${getFraudRiskBadgeClass(fraudDetection.denial_risk)}`}
+                      >
+                        {fraudDetection.denial_risk}
+                      </span>
+                    ) : (
+                      <span className="text-xs text-slate-400">-</span>
+                    )}
                   </td>
                   <td className="px-2 py-4 align-top">
                     <div className="relative flex justify-end" ref={openMenuClaimId === claim.id ? menuRef : null}>
@@ -370,10 +382,15 @@ function ClaimTable({
                               setOpenMenuClaimId(null);
                               void onDeleteClaim(claim.id);
                             }}
-                            disabled={deletingClaimId === claim.id}
+                            disabled={!canDelete || deletingClaimId === claim.id}
+                            title={canDelete ? "Delete claim" : "Only Active claims can be deleted"}
                             className="flex w-full rounded-xl px-3 py-2 text-left text-sm font-medium text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:text-slate-400"
                           >
-                            {deletingClaimId === claim.id ? "Deleting..." : "Delete"}
+                            {deletingClaimId === claim.id
+                              ? "Deleting..."
+                              : canDelete
+                                ? "Delete"
+                                : "Delete (Active only)"}
                           </button>
                         </div>
                       ) : null}
@@ -435,6 +452,10 @@ function ClaimTable({
       <p className="text-xs text-slate-500">
         Only claims with status <span className="font-semibold text-slate-700">Active</span> or{" "}
         <span className="font-semibold text-slate-700">Resubmit</span> can be selected for validation.
+      </p>
+      <p className="text-xs text-slate-500">
+        Fraud risk and denial risk populate automatically after a successful validation run. Only{" "}
+        <span className="font-semibold text-slate-700">Active</span> claims can be deleted.
       </p>
     </section>
   );

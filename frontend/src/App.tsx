@@ -23,6 +23,7 @@ import {
   PatientSummary,
   ValidationResponse,
   buildClaimFromDraft,
+  canDeleteClaim,
   canClaimBeSelectedForValidation,
   getClaimAmount,
   getClaimDiagnosisCount,
@@ -31,9 +32,7 @@ import {
   getClaimPayerLabel,
   getClaimPriorityLabel,
   getClaimProcedureCount,
-  getClaimProcedureCode,
   getClaimProcedureLabel,
-  getClaimProviderId,
   getClaimServiceLineCount,
   getClaimStatusLabel,
   getClaimTypeLabel,
@@ -265,18 +264,29 @@ function App() {
             return [result.claimId, result.claimStatus ?? "Submitted"] as const;
           }
 
-          if (!getClaimProviderId(claim) && !getClaimProcedureCode(claim)) {
-            return [result.claimId, "Submitted"] as const;
-          }
-
           try {
-            const fraudDetection = await detectFraud(claim);
+            const [fraudPrediction, fraudDetection] = await Promise.all([
+              predictFraud(claim),
+              detectFraud(claim),
+            ]);
+
+            setFraudPredictions((current) => ({
+              ...current,
+              [result.claimId]: fraudPrediction,
+            }));
+            setFraudDetections((current) => ({
+              ...current,
+              [result.claimId]: fraudDetection,
+            }));
+
             return [
               result.claimId,
-              fraudDetection.denial_risk === "High" ? "Review" : "Submitted",
+              fraudPrediction.fraud_risk === "High" || fraudDetection.denial_risk === "High"
+                ? "Review"
+                : "Submitted",
             ] as const;
           } catch {
-            return [result.claimId, "Submitted"] as const;
+            return [result.claimId, result.claimStatus ?? "Submitted"] as const;
           }
         })
       );
@@ -379,6 +389,17 @@ function App() {
   };
 
   const onDeleteClaim = async (claimId: string) => {
+    const claim = claims.find((item) => item.id === claimId);
+    if (!claim) {
+      setError("Claim not found.");
+      return;
+    }
+
+    if (!canDeleteClaim(claim)) {
+      setError("Only claims with Active status can be deleted.");
+      return;
+    }
+
     const confirmed = window.confirm(`Delete claim ${claimId}?`);
     if (!confirmed) {
       return;
@@ -481,10 +502,10 @@ function App() {
                   <ClaimTable
                     claims={claims}
                     fraudPredictions={fraudPredictions}
+                    fraudDetections={fraudDetections}
                     loadingFraudPredictionIds={loadingFraudPredictionIds}
                     selectedClaimIds={selectedClaimIds}
                     onSelectionChange={setSelectedClaimIds}
-                    onFetchFraudInsights={onFetchFraudInsights}
                     onDeleteClaim={onDeleteClaim}
                     deletingClaimId={deletingClaimId}
                   />
