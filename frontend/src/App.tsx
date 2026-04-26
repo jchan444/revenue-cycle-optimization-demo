@@ -1,13 +1,30 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, Route, Routes, useParams } from "react-router-dom";
+import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import ClaimForm from "./components/ClaimForm";
 import ClaimTable from "./components/ClaimTable";
 import PatientSummaryCard from "./components/PatientSummaryCard";
 import PayerRuleAlert from "./components/PayerRuleAlert";
-import { fetchClaims, fetchPatient, optimizeClaims } from "./services";
+import {
+  createClaim,
+  detectFraud,
+  deleteClaim,
+  fetchClaims,
+  fetchPatient,
+  predictFraud,
+  updateClaim,
+  updateClaimStatus,
+  validateClaims,
+} from "./services";
 import {
   Claim,
+  ClaimDraftValues,
+  FraudDetectionResponse,
+  FraudPrediction,
   PatientSummary,
   ValidationResponse,
+  buildClaimFromDraft,
+  canDeleteClaim,
+  canClaimBeSelectedForValidation,
   getClaimAmount,
   getClaimDiagnosisCount,
   getClaimPatientId,
@@ -17,13 +34,14 @@ import {
   getClaimProcedureCount,
   getClaimProcedureLabel,
   getClaimServiceLineCount,
+  getClaimStatusLabel,
   getClaimTypeLabel,
 } from "./types/claim";
 
 interface ClaimInsight {
   claim: Claim;
   score: number;
-  lane: "Touchless Ready" | "Needs Review";
+  lane: "Validation Ready" | "Needs Review";
   findings: string[];
   blockers: string[];
 }
@@ -143,7 +161,7 @@ const buildClaimInsight = (claim: Claim): ClaimInsight => {
   return {
     claim,
     score: Math.max(12, Math.min(100, score)),
-    lane: blockers.length === 0 ? "Touchless Ready" : "Needs Review",
+    lane: blockers.length === 0 ? "Validation Ready" : "Needs Review",
     findings,
     blockers,
   };
@@ -151,10 +169,20 @@ const buildClaimInsight = (claim: Claim): ClaimInsight => {
 
 function App() {
   const [claims, setClaims] = useState<Claim[]>([]);
+  const [fraudPredictions, setFraudPredictions] = useState<Record<string, FraudPrediction | undefined>>({});
+  const [fraudDetections, setFraudDetections] = useState<
+    Record<string, FraudDetectionResponse | undefined>
+  >({});
+  const [loadingFraudPredictionIds, setLoadingFraudPredictionIds] = useState<string[]>([]);
   const [selectedClaimIds, setSelectedClaimIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [optimizeResult, setOptimizeResult] = useState<ValidationResponse[] | null>(null);
+  const [validationResult, setValidationResult] = useState<ValidationResponse[] | null>(null);
+  const [statusUpdateClaimId, setStatusUpdateClaimId] = useState<string | null>(null);
+  const [savingClaimId, setSavingClaimId] = useState<string | null>(null);
+  const [deletingClaimId, setDeletingClaimId] = useState<string | null>(null);
+  const [createError, setCreateError] = useState<string | null>(null);
+  const [detailError, setDetailError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadClaims = async () => {
@@ -173,34 +201,251 @@ function App() {
     void loadClaims();
   }, []);
 
+  useEffect(() => {
+    setSelectedClaimIds((current) =>
+      current.filter((claimId) => {
+        const claim = claims.find((item) => item.id === claimId);
+        return claim ? canClaimBeSelectedForValidation(claim) : false;
+      })
+    );
+  }, [claims]);
+
   const insights = useMemo(() => claims.map(buildClaimInsight), [claims]);
 
   const metrics = useMemo(() => {
     const totalClaims = claims.length;
     const totalValue = claims.reduce((sum, claim) => sum + getClaimAmount(claim), 0);
-    const touchlessReady = insights.filter((item) => item.lane === "Touchless Ready").length;
-    const reviewQueue = totalClaims - touchlessReady;
+    const validationReady = insights.filter((item) => item.lane === "Validation Ready").length;
+    const reviewQueue = totalClaims - validationReady;
 
     return {
       totalClaims,
       totalValue,
-      touchlessReady,
+      validationReady,
       reviewQueue,
-      touchlessRate: totalClaims ? Math.round((touchlessReady / totalClaims) * 100) : 0,
+      validationRate: totalClaims ? Math.round((validationReady / totalClaims) * 100) : 0,
     };
   }, [claims, insights]);
 
-  const onOptimizeSelected = async () => {
+  const onValidateSelected = async () => {
     if (!selectedClaimIds.length) {
       return;
     }
 
+    const nonEligibleSelectedClaims = claims.filter(
+      (claim) => selectedClaimIds.includes(claim.id) && !canClaimBeSelectedForValidation(claim)
+    );
+
+    if (nonEligibleSelectedClaims.length) {
+      setError("Validation only runs for claims with Active or Resubmit status.");
+      return;
+    }
+
     setError(null);
+    const claimIdsToValidate = [...selectedClaimIds];
+    const previousClaims = claims;
+
+    setClaims((current) =>
+      current.map((claim) =>
+        claimIdsToValidate.includes(claim.id) ? { ...claim, status: "InProcess" } : claim
+      )
+    );
+
     try {
-      const response = await optimizeClaims({ claimIds: selectedClaimIds });
-      setOptimizeResult(response);
+      const response = await validateClaims({ claimIds: claimIdsToValidate });
+      const statusOverrides = await Promise.all(
+        response.map(async (result) => {
+          if (result.status !== "valid") {
+            return [result.claimId, result.claimStatus ?? "Review"] as const;
+          }
+
+          const claim = previousClaims.find((item) => item.id === result.claimId);
+          if (!claim) {
+            return [result.claimId, result.claimStatus ?? "Submitted"] as const;
+          }
+
+          try {
+            const [fraudPrediction, fraudDetection] = await Promise.all([
+              predictFraud(claim),
+              detectFraud(claim),
+            ]);
+
+            setFraudPredictions((current) => ({
+              ...current,
+              [result.claimId]: fraudPrediction,
+            }));
+            setFraudDetections((current) => ({
+              ...current,
+              [result.claimId]: fraudDetection,
+            }));
+
+            return [
+              result.claimId,
+              fraudPrediction.fraud_risk === "High" || fraudDetection.denial_risk === "High"
+                ? "Review"
+                : "Submitted",
+            ] as const;
+          } catch {
+            return [result.claimId, result.claimStatus ?? "Submitted"] as const;
+          }
+        })
+      );
+
+      const statusByClaimId = Object.fromEntries(statusOverrides);
+
+      await Promise.all(
+        statusOverrides.map(async ([claimId, status]) => {
+          await updateClaimStatus(claimId, status);
+        })
+      );
+
+      setValidationResult(
+        response.map((result) => ({
+          ...result,
+          claimStatus: statusByClaimId[result.claimId] ?? result.claimStatus,
+        }))
+      );
+      setClaims((current) =>
+        current.map((claim) => {
+          const nextStatus = statusByClaimId[claim.id];
+          return nextStatus ? { ...claim, status: nextStatus } : claim;
+        })
+      );
+      setSelectedClaimIds([]);
+    } catch (err) {
+      setClaims(previousClaims);
+      setError((err as Error).message);
+    }
+  };
+
+  const onMarkClaimForResubmit = async (claimId: string) => {
+    setError(null);
+    setDetailError(null);
+    setStatusUpdateClaimId(claimId);
+    try {
+      const updatedClaim = await updateClaimStatus(claimId, "Resubmit");
+      setClaims((current) =>
+        current.map((claim) => (claim.id === updatedClaim.id ? { ...claim, ...updatedClaim } : claim))
+      );
+    } catch (err) {
+      const message = (err as Error).message;
+      setError(message);
+      setDetailError(message);
+    } finally {
+      setStatusUpdateClaimId(null);
+    }
+  };
+
+  const onSaveClaim = async (claimId: string, values: ClaimDraftValues) => {
+    const currentClaim = claims.find((claim) => claim.id === claimId);
+    if (!currentClaim) {
+      setDetailError("Claim not found.");
+      return;
+    }
+
+    setDetailError(null);
+    setSavingClaimId(claimId);
+    try {
+      const nextClaim = buildClaimFromDraft(values, currentClaim);
+      const updatedClaim = await updateClaim(claimId, nextClaim);
+      setClaims((current) =>
+        current.map((claim) => (claim.id === updatedClaim.id ? { ...claim, ...updatedClaim } : claim))
+      );
+      setFraudPredictions((current) => {
+        const next = { ...current };
+        delete next[claimId];
+        return next;
+      });
+      setFraudDetections((current) => {
+        const next = { ...current };
+        delete next[claimId];
+        return next;
+      });
+    } catch (err) {
+      setDetailError((err as Error).message);
+      throw err;
+    } finally {
+      setSavingClaimId(null);
+    }
+  };
+
+  const onCreateClaim = async (values: ClaimDraftValues) => {
+    setCreateError(null);
+    setSavingClaimId(values.id);
+    try {
+      const nextClaim = buildClaimFromDraft(values);
+      const createdClaim = await createClaim(nextClaim);
+      setClaims((current) => [createdClaim, ...current]);
+      setValidationResult(null);
+      setSelectedClaimIds([]);
+      return createdClaim;
+    } catch (err) {
+      const message = (err as Error).message;
+      setCreateError(message);
+      throw err;
+    } finally {
+      setSavingClaimId(null);
+    }
+  };
+
+  const onDeleteClaim = async (claimId: string) => {
+    const claim = claims.find((item) => item.id === claimId);
+    if (!claim) {
+      setError("Claim not found.");
+      return;
+    }
+
+    if (!canDeleteClaim(claim)) {
+      setError("Only claims with Active status can be deleted.");
+      return;
+    }
+
+    const confirmed = window.confirm(`Delete claim ${claimId}?`);
+    if (!confirmed) {
+      return;
+    }
+
+    setError(null);
+    setDeletingClaimId(claimId);
+    try {
+      await deleteClaim(claimId);
+      setClaims((current) => current.filter((claim) => claim.id !== claimId));
+      setSelectedClaimIds((current) => current.filter((id) => id !== claimId));
+      setFraudPredictions((current) => {
+        const next = { ...current };
+        delete next[claimId];
+        return next;
+      });
+      setFraudDetections((current) => {
+        const next = { ...current };
+        delete next[claimId];
+        return next;
+      });
+      setValidationResult((current) => current?.filter((item) => item.claimId !== claimId) ?? null);
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setDeletingClaimId(null);
+    }
+  };
+
+  const onFetchFraudInsights = async (claimId: string) => {
+    const claim = claims.find((item) => item.id === claimId);
+    if (!claim || loadingFraudPredictionIds.includes(claimId)) {
+      return;
+    }
+
+    setError(null);
+    setLoadingFraudPredictionIds((current) => [...current, claimId]);
+
+    try {
+      const [prediction, detection] = await Promise.all([predictFraud(claim), detectFraud(claim)]);
+      setFraudPredictions((current) => ({ ...current, [claimId]: prediction }));
+      setFraudDetections((current) => ({ ...current, [claimId]: detection }));
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoadingFraudPredictionIds((current) => current.filter((id) => id !== claimId));
     }
   };
 
@@ -221,20 +466,32 @@ function App() {
             path="/"
             element={
               <section className="mt-6 space-y-4 rounded-[28px] border border-white/70 bg-white/85 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                   <div>
                     <p className="eyebrow text-slate-500">Claims Queue</p>
-                    <h2 className="text-2xl font-semibold text-slate-950">Operational row view</h2>
+                    <h2 className="text-2xl font-semibold text-slate-950">Revenue Cycle Optimization</h2>
+                    <p className="mt-2 text-sm text-slate-600">
+                      {metrics.totalClaims} claims | {currencyFormatter.format(metrics.totalValue)} total |{" "}
+                      {metrics.validationReady} validation ready
+                    </p>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={onOptimizeSelected}
-                    disabled={!selectedClaimIds.length}
-                    className="rounded-xl bg-slate-950 px-4 py-3 text-sm font-medium text-white transition hover:bg-cyan-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
-                  >
-                    Run touchless optimization ({selectedClaimIds.length})
-                  </button>
+                  <div className="flex flex-col gap-3 md:flex-row">
+                    <Link
+                      to="/claims/new"
+                      className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-center text-sm font-medium text-slate-900 transition hover:border-cyan-500 hover:text-cyan-700"
+                    >
+                      Create claim
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={onValidateSelected}
+                      disabled={!selectedClaimIds.length}
+                      className="rounded-xl bg-slate-950 px-4 py-3 text-sm font-medium text-white transition hover:bg-cyan-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
+                    >
+                      Run validation ({selectedClaimIds.length})
+                    </button>
+                  </div>
                 </div>
 
                 {loading ? (
@@ -244,16 +501,21 @@ function App() {
                 ) : (
                   <ClaimTable
                     claims={claims}
+                    fraudPredictions={fraudPredictions}
+                    fraudDetections={fraudDetections}
+                    loadingFraudPredictionIds={loadingFraudPredictionIds}
                     selectedClaimIds={selectedClaimIds}
                     onSelectionChange={setSelectedClaimIds}
+                    onDeleteClaim={onDeleteClaim}
+                    deletingClaimId={deletingClaimId}
                   />
                 )}
 
-                {optimizeResult ? (
+                {validationResult ? (
                   <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-4">
-                    <p className="eyebrow text-slate-500">Optimization Response</p>
+                    <p className="eyebrow text-slate-500">Validation Response</p>
                     <div className="mt-3 grid gap-2">
-                      {optimizeResult.map((result) => (
+                      {validationResult.map((result) => (
                         <p
                           key={result.claimId}
                           className="rounded-2xl bg-white px-3 py-2 text-sm text-slate-700"
@@ -268,8 +530,32 @@ function App() {
             }
           />
           <Route
+            path="/claims/new"
+            element={
+              <CreateClaimPage
+                creating={savingClaimId !== null}
+                error={createError}
+                onCreateClaim={onCreateClaim}
+              />
+            }
+          />
+          <Route
             path="/claims/:id"
-            element={<ClaimDetails claims={claims} insights={insights} />}
+            element={
+              <ClaimDetails
+                claims={claims}
+                insights={insights}
+                fraudPredictions={fraudPredictions}
+                fraudDetections={fraudDetections}
+                loadingFraudPredictionIds={loadingFraudPredictionIds}
+                savingClaimId={savingClaimId}
+                detailError={detailError}
+                onSaveClaim={onSaveClaim}
+                onMarkClaimForResubmit={onMarkClaimForResubmit}
+                statusUpdateClaimId={statusUpdateClaimId}
+                onFetchFraudInsights={onFetchFraudInsights}
+              />
+            }
           />
         </Routes>
       </div>
@@ -277,12 +563,64 @@ function App() {
   );
 }
 
+function CreateClaimPage({
+  creating,
+  error,
+  onCreateClaim,
+}: {
+  creating: boolean;
+  error: string | null;
+  onCreateClaim: (values: ClaimDraftValues) => Promise<Claim>;
+}) {
+  const navigate = useNavigate();
+
+  const handleCreate = async (values: ClaimDraftValues) => {
+    const createdClaim = await onCreateClaim(values);
+    navigate(`/claims/${createdClaim.id}`);
+  };
+
+  return (
+    <section className="mt-6 space-y-4">
+      <div className="rounded-[28px] border border-white/70 bg-white/85 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+        <Link to="/" className="text-sm font-medium text-cyan-700 hover:text-cyan-800">
+          Back to claims
+        </Link>
+        <div className="mt-4 max-w-3xl">
+          <h2 className="text-2xl font-semibold text-slate-950">Create a new claim</h2>
+        </div>
+      </div>
+
+      <div className="max-w-3xl">
+        <ClaimForm mode="create" onSubmit={handleCreate} saving={creating} error={error} />
+      </div>
+    </section>
+  );
+}
+
 function ClaimDetails({
   claims,
   insights,
+  fraudPredictions,
+  fraudDetections,
+  loadingFraudPredictionIds,
+  savingClaimId,
+  detailError,
+  onSaveClaim,
+  onMarkClaimForResubmit,
+  statusUpdateClaimId,
+  onFetchFraudInsights,
 }: {
   claims: Claim[];
   insights: ClaimInsight[];
+  fraudPredictions: Record<string, FraudPrediction | undefined>;
+  fraudDetections: Record<string, FraudDetectionResponse | undefined>;
+  loadingFraudPredictionIds: string[];
+  savingClaimId: string | null;
+  detailError: string | null;
+  onSaveClaim: (claimId: string, values: ClaimDraftValues) => Promise<void>;
+  onMarkClaimForResubmit: (claimId: string) => Promise<void>;
+  statusUpdateClaimId: string | null;
+  onFetchFraudInsights: (claimId: string) => Promise<void>;
 }) {
   const { id } = useParams();
   const [patient, setPatient] = useState<PatientSummary | null>(null);
@@ -313,6 +651,18 @@ function ClaimDetails({
 
     void loadPatient();
   }, [claim]);
+
+  useEffect(() => {
+    if (!claim) {
+      return;
+    }
+
+    if (fraudPredictions[claim.id] && fraudDetections[claim.id]) {
+      return;
+    }
+
+    void onFetchFraudInsights(claim.id);
+  }, [claim, fraudDetections, fraudPredictions, onFetchFraudInsights]);
 
   if (!claim || !insight) {
     return (
@@ -358,6 +708,15 @@ function ClaimDetails({
         }`
     ) ?? [];
 
+  const handleSave = async (values: ClaimDraftValues) => {
+    await onSaveClaim(claim.id, values);
+  };
+
+  const fraudPrediction = fraudPredictions[claim.id];
+  const fraudDetection = fraudDetections[claim.id];
+  const fraudInsightsLoading = loadingFraudPredictionIds.includes(claim.id);
+  const fraudWarnings = fraudPrediction?.warnings ?? [];
+
   return (
     <section className="mt-6 space-y-4">
       <div className="rounded-[28px] border border-white/70 bg-white/85 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
@@ -375,15 +734,22 @@ function ClaimDetails({
             </div>
           </div>
 
-          <div className="rounded-[22px] border border-cyan-100 bg-cyan-50 px-4 py-3 text-right">
-            <p className="text-xs uppercase tracking-[0.18em] text-cyan-700">Touchless score</p>
-            <p className="mt-2 text-3xl font-semibold text-slate-950">{insight.score}</p>
-            <p className="mt-1 text-sm text-slate-600">{insight.lane}</p>
-          </div>
+          {fraudPrediction ? (
+            <div className="rounded-[22px] border border-cyan-100 bg-cyan-50 px-4 py-3 text-right">
+              <p className="text-xs uppercase tracking-[0.18em] text-cyan-700">Risk score</p>
+              <p className="mt-2 text-3xl font-semibold text-slate-950">{fraudPrediction.risk_score}</p>
+              <p className="mt-1 text-sm text-slate-600">{fraudPrediction.fraud_risk} fraud risk</p>
+            </div>
+          ) : fraudInsightsLoading ? (
+            <div className="rounded-[22px] border border-cyan-100 bg-cyan-50 px-4 py-3 text-right">
+              <p className="text-xs uppercase tracking-[0.18em] text-cyan-700">Fraud review</p>
+              <p className="mt-2 text-sm font-medium text-slate-700">Loading latest prediction and denial checks...</p>
+            </div>
+          ) : null}
         </div>
 
         <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-          <DetailMetric label="Status" value={claim.status ?? "unknown"} />
+          <DetailMetric label="Status" value={getClaimStatusLabel(claim)} />
           <DetailMetric label="Type" value={getClaimTypeLabel(claim)} />
           <DetailMetric label="Priority" value={getClaimPriorityLabel(claim)} />
           <DetailMetric label="Created" value={formatDate(claim.created)} />
@@ -394,6 +760,18 @@ function ClaimDetails({
             label="Claim amount"
             value={currencyFormatter.format(getClaimAmount(claim))}
           />
+          {fraudPrediction ? (
+            <DetailMetric label="Predictive warnings" value={String(fraudWarnings.length)} />
+          ) : null}
+          {fraudDetection ? (
+            <DetailMetric label="Denial risk" value={fraudDetection.denial_risk} />
+          ) : null}
+          {fraudDetection ? (
+            <DetailMetric
+              label="Denial rate"
+              value={`${Math.round(fraudDetection.denial_rate * 100)}%`}
+            />
+          ) : null}
         </div>
 
         <div className="mt-5">
@@ -406,6 +784,7 @@ function ClaimDetails({
 
       <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-4">
+          {fraudPrediction ? <DetailList title="Predictive Warnings" items={fraudWarnings} /> : null}
           <DetailList title="Audit Findings" items={insight.findings} />
           <DetailList title="Human Review Triggers" items={insight.blockers} />
           <DetailList title="Diagnosis Mapping" items={diagnosisList} />
@@ -415,28 +794,19 @@ function ClaimDetails({
         </div>
 
         <div className="space-y-4">
+          <ClaimForm
+            mode="edit"
+            claim={claim}
+            onSubmit={handleSave}
+            saving={savingClaimId === claim.id}
+            error={detailError}
+            onMarkForResubmit={onMarkClaimForResubmit}
+            resubmitSaving={statusUpdateClaimId === claim.id}
+          />
           {patient ? <PatientSummaryCard patient={patient} /> : null}
         </div>
       </div>
     </section>
-  );
-}
-
-function MetricCard({
-  label,
-  value,
-  detail,
-}: {
-  label: string;
-  value: string;
-  detail: string;
-}) {
-  return (
-    <div className="rounded-[22px] border border-white/15 bg-white/10 p-4 backdrop-blur">
-      <p className="text-sm text-cyan-50/75">{label}</p>
-      <p className="mt-3 text-3xl font-semibold text-white">{value}</p>
-      <p className="mt-2 text-sm text-cyan-50/70">{detail}</p>
-    </div>
   );
 }
 

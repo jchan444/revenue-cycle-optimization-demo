@@ -1,6 +1,12 @@
 export {
+  createClaim,
+  detectFraud,
+  deleteClaim,
   fetchClaims,
   fetchPatient,
-  optimizeClaims,
+  predictFraud,
+  updateClaim,
+  updateClaimStatus,
+  validateClaims,
   validateClaim,
 } from "./api";
