@@ -72,15 +72,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-# 7. POST and test sample claim
-
-From the **root directory**, run:
-
-curl -X POST http://127.0.0.1:8000/validate \
-  -H "Content-Type: application/json" \
-  --data-binary @data/test_data/sample_claim.json
-
-# 8. Deactivate the Virtual Environment
+# 7. Deactivate the Virtual Environment
 
 When you are finished:
 
